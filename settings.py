@@ -20,7 +20,7 @@ SESSION_CONFIGS = [
     #},
     {
         'name': 'test_game',
-        'display_name': 'test_game',
+        'display_name': 'Test game',
         'num_demo_participants': 3,
         'app_sequence': ['test_game'],
     }
