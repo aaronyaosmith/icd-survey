@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Consent Form
+{% endblock %}
+
+{% block content %}
+
+    <p>Hi, my name is MR. CONSENT FORM. This study is a WORK IN PROGRESS!! :)</p>
+
+    <p>This survey is part of a research study conducted by Professor George Loewenstein at Carnegie Mellon University.</p>
+
+    <p>The purpose of the research is to understand human judgment and decision making.</p>
+
+    <p><strong>Procedures</strong><br>In this study, you will be asked to answer a series of questions and we will record your responses. We will ask you to make judgments and report your opinion. None of these questions will be invasive or emotionally evocative.</p>
+
+    <p><strong>Participant Requirements</strong><br>Participation in this study is limited to individuals age 18 and older.</p>
+
+    <p><strong>Risks</strong><br>The risks and discomfort associated with participation in this study are no greater than those ordinarily encountered in daily life or during mild physical activity, such as when surfing the Internet or composing an email.</p>
+
+    <p><strong>Benefits</strong><br>There may be no personal benefit from your participation in the study but the knowledge received may be of value to humanity.</p>
+
+    <p><strong>Compensation &amp; Costs</strong><br>You will receive $10 in exchange for your participation in this study. You will also have the chance to earn additional payment based on your performance in the task.</p>
+
+    <p>There will be no cost to you if you participate in this study.</p>
+
+    <p><strong>Confidentiality</strong><br>By participating in this research, you understand and agree that Carnegie Mellon may be required to disclose your consent form, data and other personally identifiable information as required by law, regulation, subpoena or court order. Otherwise, your confidentiality will be maintained in the following manner:</p>
+
+    <p>The researchers will take the following steps to protect participants’ identities during this study: (1) Each participant will be assigned a number; (2) The researchers will record any data collected during the study by number, not by name; (3) Any original recordings or data files will be stored in a secured location accessed only by authorized researchers; (4) IP addresses will be deleted before any data is analyzed.</p>
+
+    <p><strong>Right to Ask Questions &amp; Contact Information</strong><br>If you have any questions about this study, you should feel free to ask them by contacting the Principal Investigator now at Dr. George Loewenstein, Professor, Carnegie Mellon University, Social and Decision Sciences, 208 Porter Hall, 5000 Forbes Ave., Pittsburgh, PA 15213, 412-268-8787, gloew@andrew.cmu.edu. If you have questions later, desire additional information, or wish to withdraw your participation please contact the Principal Investigator by mail, phone or e-mail in accordance with the contact information listed above.</p>
+
+    <p>If you have questions pertaining to your rights as a research participant, or to report objections to this study, you should contact the Research Regulatory Compliance Office at Carnegie Mellon University. Email: irb-review@andrew.cmu.edu. Phone: 412-268-1901 or 412-268-5460.</p>
+
+    <p>The Carnegie Mellon University Institutional Review Board (IRB) has approved the use of human participants for this study.</p>
+
+    <p><strong>Voluntary Participation</strong><br>Your participation in this research is voluntary. You may discontinue participation at any time during the research activity.</p>
+   
+    {% for field in form %}
+    	{% formfield field %}
+    {% endfor %}
+
+    {% next_button %}
+
+{% endblock %}

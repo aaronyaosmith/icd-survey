@@ -23,7 +23,13 @@ SESSION_CONFIGS = [
         'display_name': 'Test game',
         'num_demo_participants': 3,
         'app_sequence': ['test_game'],
-    }
+    },
+    {
+        'name': 'study',
+        'display_name': 'ICD',
+        'num_demo_participants': 3,
+        'app_sequence': ['study'],
+    },
 ]
 
 
@@ -35,7 +41,12 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = True
 
-ROOMS = []
+ROOMS = [
+    {
+        'name': 'test_room',
+        'display_name': 'Test Room',
+    },
+]
 
 
 # AUTH_LEVEL:

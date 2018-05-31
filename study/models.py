@@ -26,4 +26,25 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    # define group IDs such that the "advisor" role corresponds to ID==1, "advisee" to ID==2, "judge/evaluator" to ID==3. Use player.role() to retrieve this role.
+    def role(self):
+        if self.id_in_group == 1:
+            return 'advisor'
+        elif self.id_in_group == 2:
+            return 'advisee'
+        elif self.id_in_group == 3:
+            return 'evaluator'
+
+    consent18 = models.BooleanField(
+        label="I am age 18 or older",
+        widget=widgets.RadioSelect
+        )
+    consentRead = models.BooleanField(
+        label="I have read and understand the above information",
+        widget=widgets.RadioSelect
+        )
+    consentWant = models.BooleanField(
+        label="I want to participate in this research and continue with this study",
+        widget=widgets.RadioSelect
+        )
+ 
