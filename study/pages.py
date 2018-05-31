@@ -2,6 +2,7 @@ from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+# These pages roughly follow the page divisions as specified in the Qualtrics survey.
 
 class Consent(Page):
 
@@ -13,10 +14,15 @@ class Consent(Page):
         if values["consent18"] != True or values["consentRead"] != True or values["consentWant"] != True:
             return 'Sorry, but you are not eligible for this study.'
 
-class Intro(Page):
+# "You will play the role of %role%."
+class Intro1(Page):
+    pass
+
+class Intro2(Page):
     pass
 
 page_sequence = [
     Consent,
-    Intro,
+    Intro1,
+    Intro2,
 ]
