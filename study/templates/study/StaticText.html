@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% comment %}
+This template creates a page with only text and a "Next" button. Use this template by specifying:
+	template_name = 'study/StaticText.html'
+and:
+	def vars_for_template(self):
+	    return {'text': 'Whatever text you want to display, formatted as HTML, goes here'}
+in pages.py.
+{% endcomment %}
+
+{% block content %}
+
+    {{ text | safe }}
+
+    {% next_button %}
+
+{% endblock %}

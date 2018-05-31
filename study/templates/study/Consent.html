@@ -9,6 +9,8 @@
 
     <p>Hi, my name is MR. CONSENT FORM. This study is a WORK IN PROGRESS!! :)</p>
 
+    {% if group.disclosure == True %} <p>This study is in DISCLOSURE MODE.</p> {% else %} <p>This study is in NON-DISCLOSURE MODE.</p> {% endif %}
+
     <p>This survey is part of a research study conducted by Professor George Loewenstein at Carnegie Mellon University.</p>
 
     <p>The purpose of the research is to understand human judgment and decision making.</p>

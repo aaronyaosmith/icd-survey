@@ -1,3 +1,4 @@
+import random
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
@@ -19,10 +20,13 @@ class Constants(BaseConstants):
 
 class Subsession(BaseSubsession):
     def creating_session(self):
+        # randomize players in groups, then assign disclosure/non-disclosure randomly to groups
         self.group_randomly()
+        for group in self.get_groups():
+            group.disclosure = random.choice([True, False])
 
 class Group(BaseGroup):
-    pass
+    disclosure = models.BooleanField()
 
 
 class Player(BasePlayer):
@@ -34,6 +38,13 @@ class Player(BasePlayer):
             return 'advisee'
         elif self.id_in_group == 3:
             return 'evaluator'
+
+    def isAdvisor(self):
+        return self.id_in_group == 1
+    def isAdvisee(self):
+        return self.id_in_group == 2
+    def isEvaluator(self):
+        return self.id_in_group == 3
 
     consent18 = models.BooleanField(
         label="I am age 18 or older",
