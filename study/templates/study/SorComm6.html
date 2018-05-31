@@ -1,0 +1,18 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <td valign="middle" align="center">
+        <img src="{% static "study/grid.png" %}" width="100%"/>
+    </td>
+
+    <p>
+    Please fill out the communication form on the next page with your advice to the advisee. You will be paid as 
+    described previously, depending on the advisee's estimate.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    {% if group.disclosure == True %}
+        <p><em>
+	Your payment is disclosed to the advisee on the online communication form.
+	</em></p>
+	<p>
+	That is, the advisee will know when making his or her estimate that you will be paid a bonus if he or she 
+	overestimates the correct number of solid dots.  
+	</p>
+    {% else %}
+        <p><em>
+	Your payment scheme will <strong>NOT</strong> be disclosed to the advisee.
+	</em></p>
+	<p>
+	That is, the advisee will NOT know when making his or her estimate that you will be paid a bonus if he or 
+	she overestimates the correct number of solid dots.  
+	</p>
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

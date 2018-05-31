@@ -27,7 +27,11 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     disclosure = models.BooleanField()
-
+    recommendation = models.IntegerField(
+        min=0,
+        max=900,
+        widget=widgets.Slider(attrs={'step': '1'})
+    )
 
 class Player(BasePlayer):
     # define group IDs such that the "advisor" role corresponds to ID==1, "advisee" to ID==2, "judge/evaluator" to ID==3. Use player.role() to retrieve this role.

@@ -1,0 +1,46 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <div align="center">
+    
+    <h3>
+    Communication Form
+    </h3>
+    <td valign="middle" align="center">
+        <img src="{% static "study/smallGrid.png" %}"/>
+    </td>
+
+    {% if group.disclosure == True %}
+        <p>
+	I should let you know that I am rewarded with a $5 bonus if your estimate is above the correct number of 
+	solid dots. I will receive a $10 bonus if your estimate is 100 or more dots above the correct 
+	number.
+	</p>
+	<p>
+	So, it is in my interest that you estimate a high number of dots.
+	<p>
+    {% endif %}
+	
+	
+    <p><strong>
+    I, your advisor, recommend that the number of solid dots on the 30x30 grid is:
+    </strong></p>
+
+    {% formfield group.recommendation %}
+    
+    </div>
+
+    <p>
+    Reminder: The correct number of solid dots is <strong>406</strong>. You know this, but the advisee does not.
+    </p>
+    <p>
+    The advisee will use rely on your advice when making an estimate, because the advisee can only see a small 
+    portion of the grid.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
