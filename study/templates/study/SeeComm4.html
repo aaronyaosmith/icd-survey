@@ -1,6 +1,5 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
-{% load static %}
 
 {% block content %}
 
@@ -24,22 +23,13 @@
 	<p>
     {% endif %}
 	
-	
     <p><strong>
     I, your advisor, recommend that the number of solid dots on the 30x30 grid is:
     </strong></p>
 
-    {% formfield group.recommendation %}
-    
-    </div>
+    <h3><strong>{{ group.recommendation }}</strong></h3>
 
-    <p>
-    Reminder: The correct number of solid dots is <strong>{{ group.correct_answer }}</strong>. You know this, but the advisee does not.
-    </p>
-    <p>
-    The advisee will use rely on your advice when making an estimate, because the advisee can only see a small 
-    portion of the grid.
-    </p>
+    </div>
 
     {% next_button %}
 

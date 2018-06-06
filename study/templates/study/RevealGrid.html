@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+    The actual grid is shown below.
+    </p>
+
+    <td valign="middle" align="center">
+        <img src="{% static "study/grid.png" %}" width="100%"/>
+    </td>
+
+    {% next_button %}
+
+{% endblock %}

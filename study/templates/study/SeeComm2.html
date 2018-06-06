@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+    You will be rewarded for the accuracy of your estimate.
+    </p>
+    <p>
+    <strong>If you estimate is within 10 dots of the correct number</strong>, you will receive a $5 bonus.
+    </p>
+    <p>
+    <strong>If your estimate is off by more than 10</strong>, you will receive no bonus.
+    </p>
+    <p>
+    For example, if the correct number of solid dots is 450, you will earn a $5 bonus if you estimate a number 
+    between 440-460. If you estimate 439 or lower, or 461 or higher, you will receive nothing.
+    </p 
+
+    {% next_button %}
+
+{% endblock %}

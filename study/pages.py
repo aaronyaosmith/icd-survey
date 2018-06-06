@@ -25,35 +25,77 @@ class Intro2(Page):
 # SorComm: Communication pages for the advisor
 class SorComm1(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
 class SorComm2(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
 class SorComm3(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
 class SorComm4(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
 class SorComm5(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
     
 class SorComm6(Page):
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
 class SorComm7(Page):
     form_model = 'group'
     form_fields = ['recommendation']
 
     def is_displayed(self):
-        return self.player.isAdvisor()
+        return self.player.is_advisor()
 
+class WaitForRecommendation(WaitPage):
+    pass
+
+class SeeComm1(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeComm2(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeComm3(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeComm4(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeComm5(Page):
+    form_model = 'group'
+    form_fields = ['estimate']
+
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeComm6(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class WaitForEstimate(WaitPage):
+    pass
+
+class RevealGrid(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+    def before_next_page(self):
+        self.group.calculate_grid_rewards()
+
+class GridReward(Page):
+    def is_displayed(self):
+        return self.player.is_advisor() or self.player.is_advisee()
 
 
 page_sequence = [
@@ -67,4 +109,14 @@ page_sequence = [
     SorComm5,
     SorComm6,
     SorComm7,
+    WaitForRecommendation,
+    SeeComm1,
+    SeeComm2,
+    SeeComm3,
+    SeeComm4,
+    SeeComm5,
+    SeeComm6,
+    WaitForEstimate,
+    RevealGrid,
+    GridReward,
 ]

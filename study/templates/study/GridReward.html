@@ -1,0 +1,22 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    {% if player.role == 'advisor' %}
+        <p>
+	Your advisee guessed that there were {{ group.estimate }} solid dots. The correct number was 
+	{{ group.correct_answer }}. Therefore, you earn {{ player.grid_reward }}
+	{% if player.grid_reward != 0 %}!{% else %}.{% endif %}
+	</p>
+    {% elif player.role == 'advisee' %}
+        <p>
+	You guessed that there were {{ group.estimate }} solid dots. The correct number was 
+	{{ group.correct_answer }}. Therefore, you earn {{ player.grid_reward }}
+	{% if player.grid_reward != 0 %}!{% else %}.{% endif %}
+	</p>
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

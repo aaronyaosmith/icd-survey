@@ -1,0 +1,17 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+    The advisor has viewed a 30x30 grid (a different grid to the example you saw) and written a recommendation to 
+    you about the number of solid dots in this grid.
+    </p>
+    <p>
+    Soon you will see the advisor's recommendation along with a small 3x3 subset of the grid. From this information,
+    you can give your estimate of the number of solid dots in the full 30x30 grid.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

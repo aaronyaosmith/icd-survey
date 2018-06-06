@@ -1,0 +1,14 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+    Please make your estimate of the number of solid dots in the full 30x30 grid.
+    </p>
+
+    {% formfield group.estimate %}
+
+    {% next_button %}
+
+{% endblock %}
