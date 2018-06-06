@@ -1,0 +1,24 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    During the activity, the advisor viewed a 30x30 grid (different from the one you saw earlier) and wrote a recommendation to the advisee about the number of solid dots in this grid.
+    </p>
+    <p>
+    The advisor had access to the entire 30x30 grid, and knew the exact number of solid dots, which was <strong>{{ group.correct_answer }}</strong>.
+    </p>
+    <p>
+    The picture the advisor saw is below:
+    </p>
+
+    <td valign="middle" align="center">
+        <img src="{% static "study/grid.png" %}" width="100%"/>
+    </td>
+
+
+    {% next_button %}
+
+{% endblock %}

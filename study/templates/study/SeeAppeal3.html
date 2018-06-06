@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    Remember: In order to send this case to the judge, you will need to pay {{ Constants.appeal_cost }}. 
+    </p>
+    <p>
+    <strong>If you send the case and the judge decides you were treated unfairly</strong>, you will pay 
+    {{ Constants.appeal_cost }} and receive {{ Constants.appeal_reward }}, while your advisor will receive $0. 
+    </p>
+    <p>
+    <strong>If you send the case and the judge decides you were treated fairly</strong>, you will pay 
+    {{ Constants.appeal_cost }}. Both you and your advisor will receive {{ Constants.appeal_reward_split }}.
+    </p>
+    <p>
+    <strong>If you decide not to send the case</strong> you and your advisor will each receive 
+    {{ Constants.appeal_reward_split }}.
+    </p>
+
+    {% formfield group.appealed %}
+
+    {% next_button %}
+
+{% endblock %}

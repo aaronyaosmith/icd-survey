@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    Now we’d like to tell you more information about your advisor. Your advisor had access to the entire 30x30 grid 
+    and knew the exact number of shaded-in cells, which was <strong>{{ group.correct_answer }}</strong>. 
+    </p>
+    <p>
+    The picture the advisor saw is below:
+    </p>
+
+    <td valign="middle" align="center">
+        <img src="{% static "study/grid.png" %}" width="100%"/>
+    </td>
+
+    {% if group.disclosure == True %}
+	<p>
+	<strong>As specified earlier, your advisor was NOT compensated if you were accurate</strong>, but if you 
+	<strong>overestimated</strong> the true number of solid dots. Your advisor had the following compensation 
+	scheme:
+	</p>
+    {% else %}
+	<p>
+	<strong>Your advisor was compensated NOT if you were accurate</strong>, but if you 
+	<strong>overestimated</strong> the true number of solid dots. Your advisor had the following compensation 
+	scheme:
+    {% endif %}
+
+	<p>
+	If your estimate exceeded the number of solid dots in the grid, <strong>the advisor earned a 
+	$5 bonus</strong>.
+	</p> 
+	<p>
+	If your estimate exceeded the number of solid dots in the grid by <em>100 or more</em>, <strong>the 
+	advisor earned a $10 bonus</strong>.
+	</p>
+	<p>
+	<strong><em>
+	Thus, your advisor could earn extra money if you overestimated the number of solid dots.
+	</strong></em>
+	</p>
+
+    {% next_button %}
+
+{% endblock %}

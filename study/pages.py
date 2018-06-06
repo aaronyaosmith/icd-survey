@@ -98,8 +98,7 @@ class SeeComm6(Page):
         return self.player.is_advisee()
 
 class WaitForEstimate(WaitPage):
-    def is_displayed(self):
-        return self.player.is_advisor() or self.player.is_advisee()
+    pass
 
 class RevealGrid(Page):
     def is_displayed(self):
@@ -108,6 +107,53 @@ class RevealGrid(Page):
 class GridReward(Page):
     def is_displayed(self):
         return self.player.is_advisor() or self.player.is_advisee()
+
+class SorInfo1(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SorInfo2(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+    def vars_for_template(self):
+        return {'advisor_reward': self.group.get_player_by_role('advisor').grid_reward}
+
+class SeeAppeal1(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeAppeal2(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeAppeal3(Page):
+    form_model = 'group'
+    form_fields = ['appealed']
+
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeAppeal4(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class EvalInfo1(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+class EvalInfo2(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+class EvalInfo3(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+class EvalInfo4(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+
 
 
 page_sequence = [
@@ -133,4 +179,14 @@ page_sequence = [
     WaitForEstimate,
     RevealGrid,
     GridReward,
+    SorInfo1,
+    SorInfo2,
+    SeeAppeal1,
+    SeeAppeal2,
+    SeeAppeal3,
+    SeeAppeal4,
+    EvalInfo1,
+    EvalInfo2,
+    EvalInfo3,
+    EvalInfo4,
 ]

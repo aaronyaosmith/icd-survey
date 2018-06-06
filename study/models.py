@@ -16,7 +16,13 @@ class Constants(BaseConstants):
     name_in_url = 'study'
     players_per_group = 3
     num_rounds = 1
-
+    base_reward = c(10) # base reward for completing the survey
+    advisee_bonus = c(5) # received if estimate within 10 of answer
+    advisor_bonus = c(5) # received if estimate > answer
+    advisor_big_bonus = c(10) # received if estimate >= answer + 100
+    appeal_reward = c(5) # given to advisee on appeal win
+    appeal_reward_split = appeal_reward / 2 # given to both advisee and advisor if appeal lost or no appeal
+    appeal_cost = c(1) # cost of appeal to advisee
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -27,6 +33,10 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
     disclosure = models.BooleanField()
+    appealed =  models.BooleanField(
+        label="Would you like to send the case to the judge?",
+        widget=widgets.RadioSelect
+        ) # did advisee appeal?
     correct_answer = models.IntegerField(initial=409)
     recommendation = models.IntegerField(
         min=0,

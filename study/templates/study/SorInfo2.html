@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    You guessed that there were <strong>{{ group.estimate }}</strong> solid dots. The correct number was 
+    <strong>{{ group.correct_answer }}</strong>. As a result, your advisor earned {{ advisor_reward }}.
+    </p>
+
+    {% if group.disclosure == True %}
+    	<p>
+	As you may recall, the advisor notified you about this conflict of interest before you made your estimate.
+	</p>
+    {% else %}
+    	<p>
+	As you may recall, the advisor did not notify you about this conflict of interest before you made your 
+	estimate.
+	</p>
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

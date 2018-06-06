@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    Thank you for completing the dots estimation task. We now have some additional information for you.
+    </p>
+    <p>
+    You and the advisor are both going to receive additional bonuses for participating. There is 
+    {{ Constants.appeal_reward }} to be split evenly between yourself and the advisor, for 
+    {{ Constants.appeal_reward_split }} apiece.
+    </p>
+    <p>
+    You now have the opportunity to <strong>send your case to a third-party judge</strong>, who will review what 
+    happened to you in the dots estimation task. If you choose this option, the judge will determine whether you 
+    were treated unfairly by your advisor in the dots-estimation task.
+    </p>
+    <p>
+    If the judge decides you were treated unfairly, you will receive the entire {{ Constants.appeal_reward }} bonus 
+    (and your advisor will receive nothing).
+    </p>
+    <p>
+    If the judge decides you were treated fairly, you and your advisor will each receive 
+    {{ Constants.appeal_reward_split }}.
+    </p>
+    <p>
+    However, it costs {{ Constants.appeal_cost }} to send your case case to the judge. You will pay this fee 
+    <strong>regardless of whether or not you win.</strong>
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

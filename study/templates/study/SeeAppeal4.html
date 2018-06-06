@@ -1,0 +1,19 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    {% if group.appealed == True %}
+    <p>
+    You have chosen to send the case to the judge.
+    </p>
+    {% else %}
+    <p>
+    You have chosen not the send the case.
+    </p>
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

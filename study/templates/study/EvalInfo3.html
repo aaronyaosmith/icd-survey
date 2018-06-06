@@ -1,0 +1,32 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    {% if group.disclosure == True %}
+    <p><strong>
+    As seen in the form, the advisor was not compensated based on the accuracy of the advisee's estimate, but was paid if the advisee overestimated the true number of solid dots.
+    </strong></p>
+    {% else %}
+    <p><strong>
+    The advisor was not compensated based on the accuracy of the advisee's estimate, but was paid if the advisee overestimated the true number of solid dots.
+    </strong></p>
+    {% endif %}
+
+    <p>
+    The advisor had the following compensation scheme:   
+    </p>
+    <p>
+    If the advisee's estimate exceeded the number of solid dots in the grid (i.e., if the advisee's estimate was 410 or above), <strong>the advisor earned {{ Constants.advisor_bonus }}</strong>.
+    </p>
+    <p>
+    If the advisee's estimate exceeded the number of solid dots in the grid by 100 or more (i.e., if the advisee's estimate was 509 or above), <strong>the advisor earned {{ Constants.advisor_big_bonus }}</strong>.
+    </p>
+    <p>
+    <strong>The advisee earned {{ Constants.advisee_bonus }}</strong> if their estimate was within 10 dots of the correct answer (in this case, between 399 and 419).
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
