@@ -31,6 +31,7 @@ class Group(BaseGroup):
     recommendation = models.IntegerField(
         min=0,
         max=900,
+        initial=0,
         widget=widgets.Slider(attrs={'step': '1'})
     )
     estimate = models.IntegerField(
@@ -45,10 +46,10 @@ class Group(BaseGroup):
         advisee = self.get_player_by_role('advisee')
 
         # advisor reward
-        if self.estimate > self.correct_answer:
-            advisor.grid_reward = c(5)
-        elif self.estimate >= (self.correct_answer + 100):
+        if self.estimate >= (self.correct_answer + 100):
             advisor.grid_reward = c(10)
+        elif self.estimate > self.correct_answer:
+            advisor.grid_reward = c(5)
         else:
             advisor.grid_reward = c(0)
 

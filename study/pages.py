@@ -39,6 +39,11 @@ class SorComm4(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
+class SorBegin(Page):
+    template_name = 'study/Begin.html'
+    def is_displayed(self):
+        return self.player.is_advisor()
+
 class SorComm5(Page):
     def is_displayed(self):
         return self.player.is_advisor()
@@ -55,13 +60,19 @@ class SorComm7(Page):
         return self.player.is_advisor()
 
 class WaitForRecommendation(WaitPage):
-    pass
+    def is_displayed(self):
+        return self.player.is_advisor() or self.player.is_advisee()
 
 class SeeComm1(Page):
     def is_displayed(self):
         return self.player.is_advisee()
 
 class SeeComm2(Page):
+    def is_displayed(self):
+        return self.player.is_advisee()
+
+class SeeBegin(Page):
+    template_name = 'study/Begin.html'
     def is_displayed(self):
         return self.player.is_advisee()
 
@@ -79,19 +90,20 @@ class SeeComm5(Page):
 
     def is_displayed(self):
         return self.player.is_advisee()
+    def before_next_page(self):
+        self.group.calculate_grid_rewards()
 
 class SeeComm6(Page):
     def is_displayed(self):
         return self.player.is_advisee()
 
 class WaitForEstimate(WaitPage):
-    pass
+    def is_displayed(self):
+        return self.player.is_advisor() or self.player.is_advisee()
 
 class RevealGrid(Page):
     def is_displayed(self):
         return self.player.is_advisee()
-    def before_next_page(self):
-        self.group.calculate_grid_rewards()
 
 class GridReward(Page):
     def is_displayed(self):
@@ -106,12 +118,14 @@ page_sequence = [
     SorComm2,
     SorComm3,
     SorComm4,
+    SorBegin,
     SorComm5,
     SorComm6,
     SorComm7,
     WaitForRecommendation,
     SeeComm1,
     SeeComm2,
+    SeeBegin,
     SeeComm3,
     SeeComm4,
     SeeComm5,
