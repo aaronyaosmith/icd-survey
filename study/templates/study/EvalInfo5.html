@@ -1,0 +1,50 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    Recall that the correct number of solid dots was <strong>{{ group.correct_answer }}</strong>.
+    </p>
+    <p>
+    The advisor told the advisee it was <strong>{{ group.recommendation }}</strong>.
+    </p>
+
+    {% if group.disclosure == True %}
+    <p>
+    The advisee reviewed the advisor's advice, which included the message that the advisor stood to benefit if the advisee estimated a number that was too high. Based on this advice, the advisee provided an estimate of <strong>{{ group.estimate }}</strong>.
+    </p>
+    {% else %}
+    <p>
+    The advisee reviewed the advisor's advice, which did not disclose that the advisor stood to benefit if the advisee estimated a number that was too high. Based on this advice, the advisee provided an estimate of <strong>{{ group.estimate }}</strong>.
+    </p>
+    {% endif %}
+
+    {% if group.estimate <= group.correct_answer %}
+    <p>
+    As a result, the advisor earned nothing because the advisee's estimate was {{ group.correct_answer }} or below.
+    </p>
+    {% elif group.estimate >= advisor_upper_bound %}
+    <p>
+    As a result, the advisor earned {{ Constants.advisor_big_bonus }} because the advisee's estimate was {{ advisor_upper_bound }} or above.
+    </p>
+    {% else %}
+    <p>
+    As a result, the advisor earned {{ Constants.advisor_bonus }} because the advisee's estimate was higher than {{ group.correct_answer }}, but less than {{ advisor_upper_bound }}.
+    </p>
+    {% endif %}
+
+    {% if group.estimate <= advisee_upper_bound and group.estimate >= advisee_lower_bound %}
+    <p>
+    The advisee earned {{ Constants.advisee_bonus }} because their estimate was ten or less away from {{ group.correct_answer }}.
+    </p>
+    {% else %}
+    <p>
+    The advisee earned nothing because their estimate was more than ten away from {{ group.correct_answer }}
+    </p>
+    {% endif %}
+
+    {% next_button %}
+
+{% endblock %}

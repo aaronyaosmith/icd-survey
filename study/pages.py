@@ -153,7 +153,15 @@ class EvalInfo4(Page):
     def is_displayed(self):
         return self.player.is_evaluator()
 
-
+class EvalInfo5(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+    def vars_for_template(self):
+        return {
+            'advisor_upper_bound': self.group.correct_answer + 100,
+            'advisee_lower_bound': self.group.correct_answer - 10,
+            'advisee_upper_bound': self.group.correct_answer + 10,
+        }
 
 
 page_sequence = [
@@ -189,4 +197,5 @@ page_sequence = [
     EvalInfo2,
     EvalInfo3,
     EvalInfo4,
+    EvalInfo5,
 ]
