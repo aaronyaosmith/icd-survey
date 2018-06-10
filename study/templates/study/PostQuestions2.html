@@ -1,0 +1,20 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+   
+    <table class="table">
+        {% for field in form %}
+            <tr>
+                <th>{{ field.label }}</th>
+                {% for choice in field %}
+                    <td>{{ choice }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% next_button %}
+
+{% endblock %}

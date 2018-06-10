@@ -1,0 +1,94 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <h3>Conclusion</h3>
+    <p>
+    Thank you for your participation.
+    </p>
+    <p>
+    In this experiment, you played the role of {{ player.role }} and earned a total of <strong>{{ player.payoff }}</strong>. Here is the breakdown:
+    </p>
+    <p>
+    - For participating in the experiment, you earned a flat rate payment of {{ Constants.base_reward }}.
+    </p>
+    <p>
+    - The advisee guessed {{ group.estimate }} dots, which means that the advisor gets a bonus of {{ advisor_grid_reward }} and the advisee gets a bonus of {{ advisee_grid_reward }}.
+    </p>
+
+    {% if group.appealed %}
+        {% if group.appeal_granted %}
+	<p>
+	The advisee chose to appeal, and the judge decided that the advisee was treated unfairly. The advisee pays {{ Constants.appeal_cost }} for the appeal and receives {{ Constants.appeal_reward }}. The advisor receives nothing.
+	</p>
+	{% else %}
+	<p>
+	The advisee chose to appeal, and the judge decided that the advisee was treated fairly. The advisee pays {{ Constants.appeal_cost }} for the appeal and receives {{ Constants.appeal_reward_split }}. The advisor receives {{ Constants.appeal_reward_split }}.
+	</p>
+	{% endif %}
+    {% else %}
+    <p>
+    The advisee chose not to appeal. The advisor and advisee each receive a bonus of {{ Constants.appeal_reward_split }}
+    {% endif %}
+
+    {% formfield player.email %}
+
+    <div>&nbsp;</div>
+
+    <table style="width:100%">
+        <tr>
+		<th>Actual number of dots</th>
+		<th>{{ group.correct_answer }}</th>
+	</tr>
+	<tr><td><br/></td></tr>
+	<tr>
+		<th>Guess</th>
+		<th>Advisor bonus</th>
+	</tr>
+	<tr>
+		<td>&lt;={{ group.correct_answer }}</td>
+		<td>Nothing</td>
+	</tr>
+	<tr>
+		<td>&gt;{{ group.correct_answer }} and &lt;{{ advisor_upper_bound }}</td>
+		<td>{{ Constants.advisor_bonus }}</td>
+	</tr>
+	<tr>
+		<td>&gt;={{ advisor_upper_bound }}</td>
+		<td>{{ Constants.advisor_big_bonus }}</td>
+	</tr>
+	<tr><td><br/></td></tr>
+	<tr>
+		<th>Guess</th>
+		<th>Advisee bonus</th>
+	</tr>
+	<tr>
+		<td>&lt;{{ advisee_lower_bound }} or &gt;{{ advisee_upper_bound }}</td>
+		<td>Nothing</td>
+	</tr>
+	<tr>
+		<td>&gt;={{ advisee_lower_bound }} and &lt;={{ advisee_upper_bound }}</td>
+		<td>{{ Constants.advisee_bonus }}</td>
+	</tr>
+    </table>
+
+    <div>&nbsp;</div>
+
+    <p>
+    In this experiment, the advisor earned a higher bonus if the advisee guessed a high number of dots, and the advisee earned a higher bonus if the number of dots that he/she guessed was accurate. The judge, who reviewed any appeals, was told about the payment scheme for each player and received a flat rate payment for his/her work. This experiment parallels situations that one may encounter in life when the advisor has a financial interest in the advice that they give, but the advisee can take action if they feel they have been treated unfairly.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}
+
+{% block styles %}
+    <style type="text/css">
+        table, th, td {
+	    border: 1px solid black;
+            border-collapse: collapse;
+	}
+    </style>
+{% endblock %}

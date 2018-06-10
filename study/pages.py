@@ -1,6 +1,7 @@
 from otree.api import Currency as c, currency_range
 from ._builtin import Page, WaitPage
 from .models import Constants
+import re
 
 # These pages roughly follow the page divisions as specified in the Qualtrics survey.
 
@@ -163,6 +164,75 @@ class EvalInfo5(Page):
             'advisee_upper_bound': self.group.correct_answer + 10,
         }
 
+class EvalInfo6(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+class EvalInfo7(Page):
+    def is_displayed(self):
+        return self.player.is_evaluator()
+    def vars_for_template(self):
+        return {
+            'advisor_upper_bound': self.group.correct_answer + 100,
+            'advisee_lower_bound': self.group.correct_answer - 10,
+            'advisee_upper_bound': self.group.correct_answer + 10,
+        }
+
+class Judgement(Page):
+    form_model = 'group'
+    form_fields = ['appeal_granted']
+
+    def is_displayed(self):
+        return self.player.is_evaluator()
+
+class WaitForJudgement(WaitPage):
+    pass
+
+class PostQuestions1(Page):
+    pass
+
+class PostQuestions2(Page):
+    form_model = 'group'
+    def get_form_fields(self):
+        if self.player.is_advisee():
+            return ['a1','a2','a3','a4','a5','a6','a7','a8','a9']
+        elif self.player.is_evaluator():
+            return ['e1','e2','e3','e4','e5','e6','e7','e8','e9']
+        elif self.player.is_advisor():
+            return ['m1','m2']
+
+    # Prior to conclusion, calculate total rewards
+    def before_next_page(self):
+        self.group.assign_rewards()
+
+class Conclusion(Page):
+    form_model = 'player'
+    form_fields = ['email']
+
+    def vars_for_template(self):
+        return {
+            'advisor_grid_reward': self.group.get_player_by_role('advisor').grid_reward,
+            'advisee_grid_reward': self.group.get_player_by_role('advisee').grid_reward,
+            'advisor_upper_bound': self.group.correct_answer + 10,
+            'advisee_lower_bound': self.group.correct_answer - 10,
+            'advisee_upper_bound': self.group.correct_answer + 10
+        }
+
+    def email_error_message(self, value):
+        email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+        if not email_pattern.match(value):
+            return "Invalid email address"
+
+class Demographics1(Page):
+    pass
+
+class Demographics2(Page):
+    form_model = 'player'
+    form_fields = ['d1', 'd2', 'd3', 'd4', 'd5']
+
+class Comments(Page):
+    form_model = 'player'
+    form_fields = ['comment']
 
 page_sequence = [
     Consent,
@@ -198,4 +268,14 @@ page_sequence = [
     EvalInfo3,
     EvalInfo4,
     EvalInfo5,
+    EvalInfo6,
+    EvalInfo7,
+    Judgement,
+    WaitForJudgement,
+    PostQuestions1,
+    PostQuestions2,
+    Conclusion,
+    Demographics1,
+    Demographics2,
+    Comments
 ]
