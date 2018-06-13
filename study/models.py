@@ -23,14 +23,14 @@ def make_Likert_agreement(label):
             [1, "Strongly disagree"]
         ],
         label=label,
-        widget=widgets.RadioSelectHorizontal
+        widget=widgets.RadioSelect
     )
 
 class Constants(BaseConstants):
     name_in_url = 'study'
     players_per_group = 3
     num_rounds = 1
-    base_reward = c(10) # base reward for completing the survey
+    base_reward = c(5) # base reward for completing the survey
     advisee_bonus = c(5) # received if estimate within 10 of answer
     advisor_bonus = c(5) # received if estimate > answer
     advisor_big_bonus = c(10) # received if estimate >= answer + 100
@@ -105,48 +105,8 @@ class Group(BaseGroup):
         widget=widgets.RadioSelect
     )
 
-    # Calculates rewards based on the advisor's recommendation and advisee's estimate, then stores them per player
-    # in grid_reward.
-    def calculate_grid_rewards(self):
-        advisor = self.get_player_by_role('advisor')
-        advisee = self.get_player_by_role('advisee')
-
-        # advisor reward
-        if self.estimate >= (self.correct_answer + 100):
-            advisor.grid_reward = c(10)
-        elif self.estimate > self.correct_answer:
-            advisor.grid_reward = c(5)
-        else:
-            advisor.grid_reward = c(0)
-
-        # advisee reward
-        if self.estimate >= (self.correct_answer - 10) and self.estimate <= (self.correct_answer + 10):
-            advisee.grid_reward = c(5)
-        else:
-            advisee.grid_reward = c(0)
-
-    def assign_rewards(self):
-        advisor = self.get_player_by_role('advisor')
-        advisee = self.get_player_by_role('advisee')
-        evaluator = self.get_player_by_role('evaluator')
-
-        for player in [advisor, advisee, evaluator]:
-            player.payoff = Constants.base_reward + player.grid_reward
-
-        if self.appealed:
-            advisee.payoff -= Constants.appeal_cost
-            if self.appeal_granted:
-                advisee.payoff += Constants.appeal_reward
-            else:
-                advisee.payoff += Constants.appeal_reward_split
-                advisor.payoff += Constants.appeal_reward_split
-        else:
-            advisee.payoff += Constants.appeal_reward_split
-            advisor.payoff += Constants.appeal_reward_split
-
-
-
-                
+       
+                       
         
 
 class Player(BasePlayer):
@@ -251,3 +211,40 @@ class Player(BasePlayer):
     def is_evaluator(self):
         return self.id_in_group == 3
 
+    # Calculates rewards based on the advisor's recommendation and advisee's estimate, then stores them per player
+    # in grid_reward.
+    def calculate_grid_rewards(self):
+        if self.is_advisor(): 
+            if self.group.estimate >= (self.group.correct_answer + 100):
+                self.grid_reward = Constants.advisor_big_bonus
+            elif self.group.estimate > self.group.correct_answer:
+                self.grid_reward = Constants.advisor_bonus
+            else:
+                self.grid_reward = c(0)
+
+        elif self.is_advisee():
+            if (
+                    self.group.estimate >= (self.group.correct_answer - 10) 
+                    and self.group.estimate <= (self.group.correct_answer + 10)
+            ):
+                self.grid_reward = Constants.advisee_bonus
+            else:
+                self.grid_reward = c(0)
+
+    # Assigns rewards to players based on initially calculated grid estimation rewards and appeal results.
+    def assign_rewards(self):
+        self.payoff = Constants.base_reward + self.grid_reward
+        
+        if self.is_advisor():
+            if not (self.group.appealed and self.group.appeal_granted):
+                self.payoff += Constants.appeal_reward_split
+
+        if self.is_advisee():
+            if self.group.appealed:
+                self.payoff -= Constants.appeal_cost
+
+            if self.group.appealed and self.group.appeal_granted:
+                self.payoff += Constants.appeal_reward
+            else:
+                self.payoff += Constants.appeal_reward_split
+     

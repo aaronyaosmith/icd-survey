@@ -92,7 +92,7 @@ class SeeComm5(Page):
     def is_displayed(self):
         return self.player.is_advisee()
     def before_next_page(self):
-        self.group.calculate_grid_rewards()
+        self.player.calculate_grid_rewards()
 
 class SeeComm6(Page):
     def is_displayed(self):
@@ -203,7 +203,7 @@ class PostQuestions2(Page):
 
     # Prior to conclusion, calculate total rewards
     def before_next_page(self):
-        self.group.assign_rewards()
+        self.player.assign_rewards()
 
 class Conclusion(Page):
     form_model = 'player'
