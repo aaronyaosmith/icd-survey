@@ -92,7 +92,7 @@ class SeeComm5(Page):
     def is_displayed(self):
         return self.player.is_advisee()
     def before_next_page(self):
-        self.player.calculate_grid_rewards()
+        self.group.calculate_grid_rewards() # this function is only executed once: once the advisee advances.
 
 class SeeComm6(Page):
     def is_displayed(self):
@@ -192,36 +192,36 @@ class PostQuestions1(Page):
     pass
 
 class PostQuestions2(Page):
+    template_name = "study/PostQuestions.html"
+
     form_model = 'group'
     def get_form_fields(self):
         if self.player.is_advisee():
             return ['a1','a2','a3','a4','a5','a6','a7','a8','a9']
         elif self.player.is_evaluator():
             return ['e1','e2','e3','e4','e5','e6','e7','e8','e9']
-        elif self.player.is_advisor():
-            return ['m1','m2']
+
+    def is_displayed(self):
+        return self.player.is_advisee() or self.player.is_evaluator()
+
+class PostQuestions3(Page):
+    template_name = "study/PostQuestions.html"
+
+    form_model = 'player'
+    form_fields = ['m1', 'm2', 'm3']
 
     # Prior to conclusion, calculate total rewards
     def before_next_page(self):
         self.player.assign_rewards()
 
 class Conclusion(Page):
-    form_model = 'player'
-    form_fields = ['email']
-
     def vars_for_template(self):
         return {
-            'advisor_grid_reward': self.group.get_player_by_role('advisor').grid_reward,
+            'appeal_reward_minus_cost': Constants.appeal_reward - Constants.appeal_cost,
+            'appeal_reward_split_minus_cost': Constants.appeal_reward_split - Constants.appeal_cost,
             'advisee_grid_reward': self.group.get_player_by_role('advisee').grid_reward,
-            'advisor_upper_bound': self.group.correct_answer + 10,
-            'advisee_lower_bound': self.group.correct_answer - 10,
-            'advisee_upper_bound': self.group.correct_answer + 10
+            'advisor_grid_reward': self.group.get_player_by_role('advisor').grid_reward
         }
-
-    def email_error_message(self, value):
-        email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
-        if not email_pattern.match(value):
-            return "Invalid email address"
 
 class Demographics1(Page):
     pass
@@ -233,6 +233,15 @@ class Demographics2(Page):
 class Comments(Page):
     form_model = 'player'
     form_fields = ['comment']
+
+class Finish(Page):
+    form_model = 'player'
+    form_fields = ['email']
+
+    def email_error_message(self, value):
+        email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
+        if not email_pattern.match(value):
+            return "Invalid email address"
 
 page_sequence = [
     Consent,
@@ -274,8 +283,10 @@ page_sequence = [
     WaitForJudgement,
     PostQuestions1,
     PostQuestions2,
+    PostQuestions3,
     Conclusion,
     Demographics1,
     Demographics2,
-    Comments
+    Comments,
+    Finish
 ]

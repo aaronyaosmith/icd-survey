@@ -9,9 +9,10 @@
 {% block content %}
 
     {% if player.role == 'advisor' %}
-        <p>In this study, your advisee will attempt to estimate the number of solid (filled) dots in a 30x30 grid like the one that you can see below. The advisee can only see a portion of the grid, 3x3 dots. See EXAMPLE below.</p>
+        <p>In this study, your advisee will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The advisee can only see a small subset of the grid. highlighted in yellow below</p>
     {% elif player.role == 'advisee' %}
-	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid. The number of solid dots can vary from 0 to 900. You only have access to a small subset of the grid, 3x3 dots, whereas the advisors have access to the full grid. See EXAMPLE below.</p>
+    	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. You can only see a small 3x3 subset of the grid, highlighted in yellow below.</p>
+	
     {% elif player.role == 'evaluator' %}
 	<p>In this study, the advisor was tasked with giving advice on the number of solid (filled) dots in a 30x30 grid. The number of solid dots could vary from 0 to 900. The advisee had access only to a small subset of the grid, 3x3 dots, whereas the advisors had access to the full grid. See EXAMPLE below. Remember, you are playing the role of a neutral judge in this interaction. Later, we will ask for your thoughts on the interaction between the advisor and advisee.</p>
     {% endif %}

@@ -23,7 +23,7 @@
 
     <p><strong>Benefits</strong><br>There may be no personal benefit from your participation in the study but the knowledge received may be of value to humanity.</p>
 
-    <p><strong>Compensation &amp; Costs</strong><br>You will receive {{ Constants.base_reward }} in exchange for your participation in this study. You will also have the chance to earn additional payment based on your performance in the task.</p>
+    <p><strong>Compensation &amp; Costs</strong><br>You will receive {{ Constants.base_reward }} in exchange for your participation in this study. {% if player.role != 'evaluator' %}You will also have the chance to earn additional payment based on your performance in the task.{% endif %}</p>
 
     <p>There will be no cost to you if you participate in this study.</p>
 

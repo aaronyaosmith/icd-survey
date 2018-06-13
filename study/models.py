@@ -64,8 +64,6 @@ class Group(BaseGroup):
     recommendation = models.IntegerField(
         min=0,
         max=900,
-        initial=0,
-        widget=widgets.Slider(attrs={'step': '1'})
     )
     estimate = models.IntegerField(
         min=0,
@@ -83,29 +81,36 @@ class Group(BaseGroup):
     a8 = make_Likert_agreement("I deserve to receive the full bonus of "+str(Constants.appeal_reward)+".")
     a9 = make_Likert_agreement("My advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
-    e1 = make_Likert_agreement("I blame the advisee for her estimate.")
+    e1 = make_Likert_agreement("I blame the advisee for his/her estimate.")
     e2 = make_Likert_agreement("I blame the advisor for the advisee's estimate.")
     e3 = make_Likert_agreement("The advisee has a legitimate grievance against the advisor.")
-    e4 = make_Likert_agreement("The advisee has a strong case if she chooses to pursue an appeal.")
+    e4 = make_Likert_agreement("The advisee has a strong case if he/she chooses to pursue an appeal.")
     e5 = make_Likert_agreement("I believe that others would rule in the advisee's favor on an appeal.")
     e6 = make_Likert_agreement("The advisor treated the advisee fairly.")
     e7 = make_Likert_agreement("The advisee was mistreated by the advisor.")
     e8 = make_Likert_agreement("The advisee deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
     e9 = make_Likert_agreement("The advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
-   
-    # Manipulation checks
-    m1 = models.BooleanField(
-        label="I make more money if the advisee overestimates the correct number of dots.",
-        widget=widgets.RadioSelect
-    )
-    m2 = models.BooleanField(
-        label="The advisee is informed that I make more money if he or she overestimates the true number of "+
-           "solid dots.",
-        widget=widgets.RadioSelect
-    )
+ 
+    # Calculates rewards based on the advisor's recommendation and advisee's estimate, then stores them per player
+    # in grid_reward.
+    def calculate_grid_rewards(self):
+        advisor = self.get_player_by_role('advisor')
+        advisee = self.get_player_by_role('advisee')
 
-       
+        # advisor reward
+        if self.estimate >= (self.correct_answer + 100):
+            advisor.grid_reward = Constants.advisor_big_bonus
+        elif self.estimate > self.correct_answer:
+            advisor.grid_reward = Constants.advisor_bonus
+        else:
+            advisor.grid_reward = c(0)
+
+        # advisee reward
+        if self.estimate >= (self.correct_answer - 10) and self.estimate <= (self.correct_answer + 10):
+            advisee.grid_reward = Constants.advisee_bonus
+        else:
+            advisee.grid_reward = c(0)
                        
         
 
@@ -190,7 +195,24 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
         blank=True
     )
-    
+  
+    # Manipulation checks
+    m1 = models.BooleanField(
+        label="In this task, the advisor would get a bonus if the advisee overestimated the true number of "
+            + "solid dots.",
+        widget=widgets.RadioSelect
+    )
+    m2 = models.BooleanField(
+        label="In this task, the advisee would get a bonus if they were within 10 dots of the true number of " 
+            + "solid dots.",
+        widget=widgets.RadioSelect
+    )
+    m3 = models.BooleanField(
+        label="The advisee was informed that the advisor would make more money if the advisee overestimated "
+            + "the true number of solid dots.",
+        widget=widgets.RadioSelect
+    )
+   
     comment = models.LongStringField(label="Do you have any comments for the researchers? (Optional)", blank=True)
 
 
@@ -210,26 +232,6 @@ class Player(BasePlayer):
         return self.id_in_group == 2
     def is_evaluator(self):
         return self.id_in_group == 3
-
-    # Calculates rewards based on the advisor's recommendation and advisee's estimate, then stores them per player
-    # in grid_reward.
-    def calculate_grid_rewards(self):
-        if self.is_advisor(): 
-            if self.group.estimate >= (self.group.correct_answer + 100):
-                self.grid_reward = Constants.advisor_big_bonus
-            elif self.group.estimate > self.group.correct_answer:
-                self.grid_reward = Constants.advisor_bonus
-            else:
-                self.grid_reward = c(0)
-
-        elif self.is_advisee():
-            if (
-                    self.group.estimate >= (self.group.correct_answer - 10) 
-                    and self.group.estimate <= (self.group.correct_answer + 10)
-            ):
-                self.grid_reward = Constants.advisee_bonus
-            else:
-                self.grid_reward = c(0)
 
     # Assigns rewards to players based on initially calculated grid estimation rewards and appeal results.
     def assign_rewards(self):

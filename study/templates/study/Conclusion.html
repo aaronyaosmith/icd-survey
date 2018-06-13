@@ -5,90 +5,57 @@
 {% block content %}
 
     <h3>Conclusion</h3>
-    <p>
-    Thank you for your participation.
-    </p>
-    <p>
-    In this experiment, you played the role of {{ player.role }} and earned a total of <strong>{{ player.payoff }}</strong>. Here is the breakdown:
-    </p>
-    <p>
-    - For participating in the experiment, you earned a flat rate payment of {{ Constants.base_reward }}.
-    </p>
-    <p>
-    - The advisee guessed {{ group.estimate }} dots, which means that the advisor gets a bonus of {{ advisor_grid_reward }} and the advisee gets a bonus of {{ advisee_grid_reward }}.
-    </p>
 
-    {% if group.appealed %}
-        {% if group.appeal_granted %}
-	<p>
-	The advisee chose to appeal, and the judge decided that the advisee was treated unfairly. The advisee pays {{ Constants.appeal_cost }} for the appeal and receives {{ Constants.appeal_reward }}. The advisor receives nothing.
-	</p>
-	{% else %}
-	<p>
-	The advisee chose to appeal, and the judge decided that the advisee was treated fairly. The advisee pays {{ Constants.appeal_cost }} for the appeal and receives {{ Constants.appeal_reward_split }}. The advisor receives {{ Constants.appeal_reward_split }}.
-	</p>
-	{% endif %}
+    {% if player.role == 'evaluator' %}
+        <p>
+        In this experiment, you played the role of <strong>judge</strong>. You earned a flat rate payment of <strong>{{ player.payoff }}</strong>.
+        </p>
     {% else %}
-    <p>
-    The advisee chose not to appeal. The advisor and advisee each receive a bonus of {{ Constants.appeal_reward_split }}
+        <p>
+        In this experiment, you played the role of <strong>{{ player.role }}</strong>, and earned a total of <strong>{{ player.payoff }}</strong>.
+        </p>
+	<p>
+	- You earned a flat rate payment of {{ Constants.base_reward }}.
+	</p>
+	{% if player.role == 'advisee' %}
+	    <p>
+	    - Your estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, you earned a {{ advisee_grid_reward }} bonus, while your advisor earned a {{ advisor_grid_reward }} bonus.
+	    </p>
+	    <p>
+	    - Additionally, you and your advisor were both eligible to receive additional bonuses for participating. There was {{ Constants.appeal_reward }} to be split evenly between you and your advisor, for {{ Constants.appeal_reward_split }} apiece. You had the option to instead pay {{ Constants.appeal_cost }} to send your case to a third-party judge. If the judge decided that your advisor treated you unfairly, you would receive the entire {{ Constants.appeal_reward }} bonus (and your advisor would receive nothing).
+	    {% if group.appealed %}
+	        {% if group.appeal_granted %}
+		    You chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that your advisor treated you unfairly. Therefore, you earned an additional {{ appeal_reward_minus_cost }}.
+		    </p>
+		{% else %}
+		    You chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that your advisor treated you fairly. Therefore, you earned an additional {{ appeal_reward_split_minus_cost }}.
+		    </p>
+		{% endif %}
+	    {% else %}
+		You chose not to send your case to the judge. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
+		</p>
+	    {% endif %}
+	{% elif player.role == 'advisor' %}
+	    <p>
+	    - Your advisee's estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, your advisee earned a {{ advisee_grid_reward }} bonus, while you earned a {{ advisor_grid_reward }} bonus.
+	    </p>
+	    <p>
+	    - Additionally, you and your advisee were both eligible to receive additional bonuses for participating. There was {{ Constants.appeal_reward }} to be split evenly between you and your advisee, for {{ Constants.appeal_reward_split }} apiece. Your advisee had the option to instead pay {{ Constants.appeal_cost }} to send his/her case to a third-party judge. If the judge decided that you treated your advisee unfairly, your advisee would receive the entire {{ Constants.appeal_reward }} bonus (and you would receive nothing).
+	    {% if group.appealed %}
+	        {% if group.appeal_granted %}
+		    Your advisee chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your advisee unfairly. Therefore, you earned no additional bonus.
+		    </p>
+		{% else %}
+		    You chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your advisee fairly. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
+		    </p>
+		{% endif %}
+	    {% else %}
+		Your advisee chose not to send your case to the judge. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
+		</p>
+	    {% endif %}
+	{% endif %}
     {% endif %}
-
-    {% formfield player.email %}
-
-    <div>&nbsp;</div>
-
-    <table style="width:100%">
-        <tr>
-		<th>Actual number of dots</th>
-		<th>{{ group.correct_answer }}</th>
-	</tr>
-	<tr><td><br/></td></tr>
-	<tr>
-		<th>Guess</th>
-		<th>Advisor bonus</th>
-	</tr>
-	<tr>
-		<td>&lt;={{ group.correct_answer }}</td>
-		<td>Nothing</td>
-	</tr>
-	<tr>
-		<td>&gt;{{ group.correct_answer }} and &lt;{{ advisor_upper_bound }}</td>
-		<td>{{ Constants.advisor_bonus }}</td>
-	</tr>
-	<tr>
-		<td>&gt;={{ advisor_upper_bound }}</td>
-		<td>{{ Constants.advisor_big_bonus }}</td>
-	</tr>
-	<tr><td><br/></td></tr>
-	<tr>
-		<th>Guess</th>
-		<th>Advisee bonus</th>
-	</tr>
-	<tr>
-		<td>&lt;{{ advisee_lower_bound }} or &gt;{{ advisee_upper_bound }}</td>
-		<td>Nothing</td>
-	</tr>
-	<tr>
-		<td>&gt;={{ advisee_lower_bound }} and &lt;={{ advisee_upper_bound }}</td>
-		<td>{{ Constants.advisee_bonus }}</td>
-	</tr>
-    </table>
-
-    <div>&nbsp;</div>
-
-    <p>
-    In this experiment, the advisor earned a higher bonus if the advisee guessed a high number of dots, and the advisee earned a higher bonus if the number of dots that he/she guessed was accurate. The judge, who reviewed any appeals, was told about the payment scheme for each player and received a flat rate payment for his/her work. This experiment parallels situations that one may encounter in life when the advisor has a financial interest in the advice that they give, but the advisee can take action if they feel they have been treated unfairly.
-    </p>
 
     {% next_button %}
 
-{% endblock %}
-
-{% block styles %}
-    <style type="text/css">
-        table, th, td {
-	    border: 1px solid black;
-            border-collapse: collapse;
-	}
-    </style>
 {% endblock %}

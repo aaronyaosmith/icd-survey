@@ -1,0 +1,15 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+{% load static %}
+
+{% block content %}
+
+    <p>
+    Thank you for your participating!
+    </p>
+
+    {% formfield player.email %}
+
+    {% next_button %}
+
+{% endblock %}
