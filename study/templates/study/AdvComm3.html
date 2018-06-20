@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <h3>
+    Advisee's payment
+    </h3>
+    <p>
+    The estimator will be rewarded for the accuracy of his or her estimate of the correct number of solid 
+    dots in the 30x30 grid that you see.
+    </p>
+    <p>
+    <strong>If the estimator's estimate is within 10 dots of the correct number</strong>, the estimator will 
+    receive a bonus of {{ Constants.estimator_bonus }}.
+    </p>
+    <p>
+    <strong>If the estimator's estimate is off by more than 10</strong>, he or she will receive no bonus.
+    </p>
+    <p>
+    For example, if the correct number of solid dots is 450, the estimator will earn a {{ Constants.estimator_bonus }} if he or she 
+    estimates a number between 440-460. If the estimator estimates 439 or lower, or 461 or higher, he or she 
+    will receive no bonus.
+    </p>
+    <h3>
+    Your payment
+    </h3>
+    <p>
+    As the advisor, you will receive a {{ Constants.advisor_bonus }} bonus <strong>if the estimator provides an estimate that is greater 
+    than the correct value.</strong>
+    </p>
+    <p>
+    You will receive a {{ Constants.advisor_big_bonus }} bonus <strong>if the estimator provides an estimate that is 100 dots or more over
+    the correct value</strong>.
+    </p>
+    <p>
+    For example, if the correct number of solid dots is 450, and the estimator estimates 451 dots, then you 
+    will receive a {{ Constants.advisor_bonus }} bonus. If the estimator estimates that the number of solid dots was 550 or more, then 
+    you would receive a {{ Constants.advisor_big_bonus }} bonus.
+    </p>
+    <p>
+    Note that if the estimator does not estimate above the correct number, you will receive nothing. For 
+    instance, if the estimator estimates 450 or lower, you will receive nothing.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

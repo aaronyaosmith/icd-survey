@@ -13,7 +13,7 @@ class Consent(Page):
     def error_message(self, values):
         print('values is', values)
         if values["consent18"] != True or values["consentRead"] != True or values["consentWant"] != True:
-            return 'Sorry, but you are not eligible for this study.'
+            return 'Advry, but you are not eligible for this study.'
 
 # "You will play the role of %role%."
 class Intro1(Page):
@@ -23,37 +23,37 @@ class Intro1(Page):
 class Intro2(Page):
     pass
 
-# SorComm: Communication pages for the advisor
-class SorComm1(Page):
+# AdvComm: Communication pages for the advisor
+class AdvComm1(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorComm2(Page):
+class AdvComm2(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorComm3(Page):
+class AdvComm3(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorComm4(Page):
+class AdvComm4(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorBegin(Page):
+class AdvBegin(Page):
     template_name = 'study/Begin.html'
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorComm5(Page):
+class AdvComm5(Page):
     def is_displayed(self):
         return self.player.is_advisor()
     
-class SorComm6(Page):
+class AdvComm6(Page):
     def is_displayed(self):
         return self.player.is_advisor()
 
-class SorComm7(Page):
+class AdvComm7(Page):
     form_model = 'group'
     form_fields = ['recommendation']
 
@@ -62,120 +62,120 @@ class SorComm7(Page):
 
 class WaitForRecommendation(WaitPage):
     def is_displayed(self):
-        return self.player.is_advisor() or self.player.is_advisee()
+        return self.player.is_advisor() or self.player.is_estimator()
 
-class SeeComm1(Page):
+class EstComm1(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeComm2(Page):
+class EstComm2(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeBegin(Page):
+class EstBegin(Page):
     template_name = 'study/Begin.html'
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeComm3(Page):
+class EstComm3(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeComm4(Page):
+class EstComm4(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeComm5(Page):
+class EstComm5(Page):
     form_model = 'group'
     form_fields = ['estimate']
 
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
     def before_next_page(self):
-        self.group.calculate_grid_rewards() # this function is only executed once: once the advisee advances.
+        self.group.calculate_grid_rewards() # this function is only executed once: once the estimator advances.
 
-class SeeComm6(Page):
+class EstComm6(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
 class WaitForEstimate(WaitPage):
     pass
 
 class RevealGrid(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
 class GridReward(Page):
     def is_displayed(self):
-        return self.player.is_advisor() or self.player.is_advisee()
+        return self.player.is_advisor() or self.player.is_estimator()
 
-class SorInfo1(Page):
+class AdvInfo1(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SorInfo2(Page):
+class AdvInfo2(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
     def vars_for_template(self):
         return {'advisor_reward': self.group.get_player_by_role('advisor').grid_reward}
 
-class SeeAppeal1(Page):
+class EstAppeal1(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeAppeal2(Page):
+class EstAppeal2(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeAppeal3(Page):
+class EstAppeal3(Page):
     form_model = 'group'
     form_fields = ['appealed']
 
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class SeeAppeal4(Page):
+class EstAppeal4(Page):
     def is_displayed(self):
-        return self.player.is_advisee()
+        return self.player.is_estimator()
 
-class EvalInfo1(Page):
+class JudgeInfo1(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
-class EvalInfo2(Page):
+class JudgeInfo2(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
-class EvalInfo3(Page):
+class JudgeInfo3(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
-class EvalInfo4(Page):
+class JudgeInfo4(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
-class EvalInfo5(Page):
+class JudgeInfo5(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
     def vars_for_template(self):
         return {
             'advisor_upper_bound': self.group.correct_answer + 100,
-            'advisee_lower_bound': self.group.correct_answer - 10,
-            'advisee_upper_bound': self.group.correct_answer + 10,
+            'estimator_lower_bound': self.group.correct_answer - 10,
+            'estimator_upper_bound': self.group.correct_answer + 10,
         }
 
-class EvalInfo6(Page):
+class JudgeInfo6(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
-class EvalInfo7(Page):
+class JudgeInfo7(Page):
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
     def vars_for_template(self):
         return {
             'advisor_upper_bound': self.group.correct_answer + 100,
-            'advisee_lower_bound': self.group.correct_answer - 10,
-            'advisee_upper_bound': self.group.correct_answer + 10,
+            'estimator_lower_bound': self.group.correct_answer - 10,
+            'estimator_upper_bound': self.group.correct_answer + 10,
         }
 
 class Judgement(Page):
@@ -183,7 +183,7 @@ class Judgement(Page):
     form_fields = ['appeal_granted']
 
     def is_displayed(self):
-        return self.player.is_evaluator()
+        return self.player.is_judge()
 
 class WaitForJudgement(WaitPage):
     pass
@@ -196,13 +196,13 @@ class PostQuestions2(Page):
 
     form_model = 'group'
     def get_form_fields(self):
-        if self.player.is_advisee():
+        if self.player.is_estimator():
             return ['a1','a2','a3','a4','a5','a6','a7','a8','a9']
-        elif self.player.is_evaluator():
+        elif self.player.is_judge():
             return ['e1','e2','e3','e4','e5','e6','e7','e8','e9']
 
     def is_displayed(self):
-        return self.player.is_advisee() or self.player.is_evaluator()
+        return self.player.is_estimator() or self.player.is_judge()
 
 class PostQuestions3(Page):
     template_name = "study/PostQuestions.html"
@@ -219,7 +219,7 @@ class Conclusion(Page):
         return {
             'appeal_reward_minus_cost': Constants.appeal_reward - Constants.appeal_cost,
             'appeal_reward_split_minus_cost': Constants.appeal_reward_split - Constants.appeal_cost,
-            'advisee_grid_reward': self.group.get_player_by_role('advisee').grid_reward,
+            'estimator_grid_reward': self.group.get_player_by_role('estimator').grid_reward,
             'advisor_grid_reward': self.group.get_player_by_role('advisor').grid_reward
         }
 
@@ -247,38 +247,38 @@ page_sequence = [
     Consent,
     Intro1,
     Intro2,
-    SorComm1,
-    SorComm2,
-    SorComm3,
-    SorComm4,
-    SorBegin,
-    SorComm5,
-    SorComm6,
-    SorComm7,
+    AdvComm1,
+    AdvComm2,
+    AdvComm3,
+    AdvComm4,
+    AdvBegin,
+    AdvComm5,
+    AdvComm6,
+    AdvComm7,
     WaitForRecommendation,
-    SeeComm1,
-    SeeComm2,
-    SeeBegin,
-    SeeComm3,
-    SeeComm4,
-    SeeComm5,
-    SeeComm6,
+    EstComm1,
+    EstComm2,
+    EstBegin,
+    EstComm3,
+    EstComm4,
+    EstComm5,
+    EstComm6,
     WaitForEstimate,
     RevealGrid,
     GridReward,
-    SorInfo1,
-    SorInfo2,
-    SeeAppeal1,
-    SeeAppeal2,
-    SeeAppeal3,
-    SeeAppeal4,
-    EvalInfo1,
-    EvalInfo2,
-    EvalInfo3,
-    EvalInfo4,
-    EvalInfo5,
-    EvalInfo6,
-    EvalInfo7,
+    AdvInfo1,
+    AdvInfo2,
+    EstAppeal1,
+    EstAppeal2,
+    EstAppeal3,
+    EstAppeal4,
+    JudgeInfo1,
+    JudgeInfo2,
+    JudgeInfo3,
+    JudgeInfo4,
+    JudgeInfo5,
+    JudgeInfo6,
+    JudgeInfo7,
     Judgement,
     WaitForJudgement,
     PostQuestions1,

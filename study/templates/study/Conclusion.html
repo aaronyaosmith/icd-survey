@@ -6,7 +6,7 @@
 
     <h3>Conclusion</h3>
 
-    {% if player.role == 'evaluator' %}
+    {% if player.role == 'judge' %}
         <p>
         In this experiment, you played the role of <strong>judge</strong>. You earned a flat rate payment of <strong>{{ player.payoff }}</strong>.
         </p>
@@ -17,9 +17,9 @@
 	<p>
 	- You earned a flat rate payment of {{ Constants.base_reward }}.
 	</p>
-	{% if player.role == 'advisee' %}
+	{% if player.role == 'estimator' %}
 	    <p>
-	    - Your estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, you earned a {{ advisee_grid_reward }} bonus, while your advisor earned a {{ advisor_grid_reward }} bonus.
+	    - Your estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, you earned a {{ estimator_grid_reward }} bonus, while your advisor earned a {{ advisor_grid_reward }} bonus.
 	    </p>
 	    <p>
 	    - Additionally, you and your advisor were both eligible to receive additional bonuses for participating. There was {{ Constants.appeal_reward }} to be split evenly between you and your advisor, for {{ Constants.appeal_reward_split }} apiece. You had the option to instead pay {{ Constants.appeal_cost }} to send your case to a third-party judge. If the judge decided that your advisor treated you unfairly, you would receive the entire {{ Constants.appeal_reward }} bonus (and your advisor would receive nothing).
@@ -37,20 +37,20 @@
 	    {% endif %}
 	{% elif player.role == 'advisor' %}
 	    <p>
-	    - Your advisee's estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, your advisee earned a {{ advisee_grid_reward }} bonus, while you earned a {{ advisor_grid_reward }} bonus.
+	    - Your estimator's estimate was <strong>{{ group.estimate }}</strong> dots, while the correct answer was <strong>{{ group.correct_answer }}</strong>. Therefore, your estimator earned a {{ estimator_grid_reward }} bonus, while you earned a {{ advisor_grid_reward }} bonus.
 	    </p>
 	    <p>
-	    - Additionally, you and your advisee were both eligible to receive additional bonuses for participating. There was {{ Constants.appeal_reward }} to be split evenly between you and your advisee, for {{ Constants.appeal_reward_split }} apiece. Your advisee had the option to instead pay {{ Constants.appeal_cost }} to send his/her case to a third-party judge. If the judge decided that you treated your advisee unfairly, your advisee would receive the entire {{ Constants.appeal_reward }} bonus (and you would receive nothing).
+	    - Additionally, you and your estimator were both eligible to receive additional bonuses for participating. There was {{ Constants.appeal_reward }} to be split evenly between you and your estimator, for {{ Constants.appeal_reward_split }} apiece. Your estimator had the option to instead pay {{ Constants.appeal_cost }} to send his/her case to a third-party judge. If the judge decided that you treated your estimator unfairly, your estimator would receive the entire {{ Constants.appeal_reward }} bonus (and you would receive nothing).
 	    {% if group.appealed %}
 	        {% if group.appeal_granted %}
-		    Your advisee chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your advisee unfairly. Therefore, you earned no additional bonus.
+		    Your estimator chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your estimator unfairly. Therefore, you earned no additional bonus.
 		    </p>
 		{% else %}
-		    You chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your advisee fairly. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
+		    You chose to pay {{ Constants.appeal_cost }} to send your case to the judge. The judge decided that you treated your estimator fairly. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
 		    </p>
 		{% endif %}
 	    {% else %}
-		Your advisee chose not to send your case to the judge. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
+		Your estimator chose not to send your case to the judge. Therefore, you earned an additional {{ Constants.appeal_reward_split }}.
 		</p>
 	    {% endif %}
 	{% endif %}

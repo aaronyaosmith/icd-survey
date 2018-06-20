@@ -31,12 +31,12 @@ class Constants(BaseConstants):
     players_per_group = 3
     num_rounds = 1
     base_reward = c(5) # base reward for completing the survey
-    advisee_bonus = c(5) # received if estimate within 10 of answer
+    estimator_bonus = c(5) # received if estimate within 10 of answer
     advisor_bonus = c(5) # received if estimate > answer
     advisor_big_bonus = c(10) # received if estimate >= answer + 100
-    appeal_reward = c(5) # given to advisee on appeal win
-    appeal_reward_split = appeal_reward / 2 # given to both advisee and advisor if appeal lost or no appeal
-    appeal_cost = c(1) # cost of appeal to advisee
+    appeal_reward = c(5) # given to estimator on appeal win
+    appeal_reward_split = appeal_reward / 2 # given to both estimator and advisor if appeal lost or no appeal
+    appeal_cost = c(1) # cost of appeal to estimator
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -50,12 +50,12 @@ class Group(BaseGroup):
     appealed = models.BooleanField(
         label="Would you like to send the case to the judge?",
         widget=widgets.RadioSelect
-    ) # did advisee appeal?
+    ) # did estimator appeal?
     appeal_granted = models.BooleanField(
         label="As judge, I determine that the "+str(Constants.appeal_reward)+" bonus shall be awarded as follows:", 
         choices=[
-            [False, "The advisee and advisor shall both receive "+str(Constants.appeal_reward_split)+"."],
-            [True, "The advisee shall receive "+str(Constants.appeal_reward)+
+            [False, "The estimator and advisor shall both receive "+str(Constants.appeal_reward_split)+"."],
+            [True, "The estimator shall receive "+str(Constants.appeal_reward)+
                 " and the advisor shall receive nothing."],
         ], 
         widget=widgets.RadioSelect
@@ -81,22 +81,22 @@ class Group(BaseGroup):
     a8 = make_Likert_agreement("I deserve to receive the full bonus of "+str(Constants.appeal_reward)+".")
     a9 = make_Likert_agreement("My advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
-    e1 = make_Likert_agreement("I blame the advisee for his/her estimate.")
-    e2 = make_Likert_agreement("I blame the advisor for the advisee's estimate.")
-    e3 = make_Likert_agreement("The advisee has a legitimate grievance against the advisor.")
-    e4 = make_Likert_agreement("The advisee has a strong case if he/she chooses to pursue an appeal.")
-    e5 = make_Likert_agreement("I believe that others would rule in the advisee's favor on an appeal.")
-    e6 = make_Likert_agreement("The advisor treated the advisee fairly.")
-    e7 = make_Likert_agreement("The advisee was mistreated by the advisor.")
-    e8 = make_Likert_agreement("The advisee deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
+    e1 = make_Likert_agreement("I blame the estimator for his/her estimate.")
+    e2 = make_Likert_agreement("I blame the advisor for the estimator's estimate.")
+    e3 = make_Likert_agreement("The estimator has a legitimate grievance against the advisor.")
+    e4 = make_Likert_agreement("The estimator has a strong case if he/she chooses to pursue an appeal.")
+    e5 = make_Likert_agreement("I believe that others would rule in the estimator's favor on an appeal.")
+    e6 = make_Likert_agreement("The advisor treated the estimator fairly.")
+    e7 = make_Likert_agreement("The estimator was mistreated by the advisor.")
+    e8 = make_Likert_agreement("The estimator deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
     e9 = make_Likert_agreement("The advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
  
-    # Calculates rewards based on the advisor's recommendation and advisee's estimate, then stores them per player
+    # Calculates rewards based on the advisor's recommendation and estimator's estimate, then stores them per player
     # in grid_reward.
     def calculate_grid_rewards(self):
         advisor = self.get_player_by_role('advisor')
-        advisee = self.get_player_by_role('advisee')
+        estimator = self.get_player_by_role('estimator')
 
         # advisor reward
         if self.estimate >= (self.correct_answer + 100):
@@ -106,11 +106,11 @@ class Group(BaseGroup):
         else:
             advisor.grid_reward = c(0)
 
-        # advisee reward
+        # estimator reward
         if self.estimate >= (self.correct_answer - 10) and self.estimate <= (self.correct_answer + 10):
-            advisee.grid_reward = Constants.advisee_bonus
+            estimator.grid_reward = Constants.estimator_bonus
         else:
-            advisee.grid_reward = c(0)
+            estimator.grid_reward = c(0)
                        
         
 
@@ -198,17 +198,17 @@ class Player(BasePlayer):
   
     # Manipulation checks
     m1 = models.BooleanField(
-        label="In this task, the advisor would get a bonus if the advisee overestimated the true number of "
+        label="In this task, the advisor would get a bonus if the estimator overestimated the true number of "
             + "solid dots.",
         widget=widgets.RadioSelect
     )
     m2 = models.BooleanField(
-        label="In this task, the advisee would get a bonus if they were within 10 dots of the true number of " 
+        label="In this task, the estimator would get a bonus if they were within 10 dots of the true number of " 
             + "solid dots.",
         widget=widgets.RadioSelect
     )
     m3 = models.BooleanField(
-        label="The advisee was informed that the advisor would make more money if the advisee overestimated "
+        label="The estimator was informed that the advisor would make more money if the estimator overestimated "
             + "the true number of solid dots.",
         widget=widgets.RadioSelect
     )
@@ -216,21 +216,21 @@ class Player(BasePlayer):
     comment = models.LongStringField(label="Do you have any comments for the researchers? (Optional)", blank=True)
 
 
-    # define group IDs such that the "advisor" role corresponds to ID==1, "advisee" to ID==2, "judge/evaluator"
+    # define group IDs such that the "advisor" role corresponds to ID==1, "estimator" to ID==2, "judge/judge"
     # to ID==3. Use player.role() to retrieve this role.
     def role(self):
         if self.id_in_group == 1:
             return 'advisor'
         elif self.id_in_group == 2:
-            return 'advisee'
+            return 'estimator'
         elif self.id_in_group == 3:
-            return 'evaluator'
+            return 'judge'
 
     def is_advisor(self):
         return self.id_in_group == 1
-    def is_advisee(self):
+    def is_estimator(self):
         return self.id_in_group == 2
-    def is_evaluator(self):
+    def is_judge(self):
         return self.id_in_group == 3
 
     # Assigns rewards to players based on initially calculated grid estimation rewards and appeal results.
@@ -241,7 +241,7 @@ class Player(BasePlayer):
             if not (self.group.appealed and self.group.appeal_granted):
                 self.payoff += Constants.appeal_reward_split
 
-        if self.is_advisee():
+        if self.is_estimator():
             if self.group.appealed:
                 self.payoff -= Constants.appeal_cost
 
