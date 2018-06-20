@@ -188,10 +188,7 @@ class Judgement(Page):
 class WaitForJudgement(WaitPage):
     pass
 
-class PostQuestions1(Page):
-    pass
-
-class PostQuestions2(Page):
+class Blame(Page):
     template_name = "study/PostQuestions.html"
 
     form_model = 'group'
@@ -204,7 +201,10 @@ class PostQuestions2(Page):
     def is_displayed(self):
         return self.player.is_estimator() or self.player.is_judge()
 
-class PostQuestions3(Page):
+    def vars_for_template(self):
+        return {'header': "Now we'd like to ask you to rate your level of agreement with a series of statements."}
+
+class ManipulationChecks(Page):
     template_name = "study/PostQuestions.html"
 
     form_model = 'player'
@@ -213,6 +213,10 @@ class PostQuestions3(Page):
     # Prior to conclusion, calculate total rewards
     def before_next_page(self):
         self.player.assign_rewards()
+    def vars_for_template(self):
+        return {'header': "Please answer the following three questions about the survey."}
+
+
 
 class Conclusion(Page):
     def vars_for_template(self):
@@ -236,11 +240,11 @@ class Comments(Page):
 
 class Finish(Page):
     form_model = 'player'
-    form_fields = ['email']
+    form_fields = ['email','entered_email']
 
-    def email_error_message(self, value):
+    def email_error_message(self, values):
         email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
-        if not email_pattern.match(value):
+        if not email_pattern.match(values['email']) and values['entered_email']:
             return "Invalid email address"
 
 page_sequence = [
@@ -281,9 +285,8 @@ page_sequence = [
     JudgeInfo7,
     Judgement,
     WaitForJudgement,
-    PostQuestions1,
-    PostQuestions2,
-    PostQuestions3,
+    Blame,
+    ManipulationChecks,
     Conclusion,
     Demographics1,
     Demographics2,

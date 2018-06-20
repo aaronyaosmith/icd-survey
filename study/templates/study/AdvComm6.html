@@ -5,8 +5,12 @@
 {% block content %}
 
     <td valign="middle" align="center">
-        <img src="{% static "study/grid.png" %}" width="100%"/>
+	    <img src="{% static "" %}{{ group.grid_path }}" width="100%" vspace="20"/>
     </td>
+
+    <p>
+    The correct number of solid dots is <strong>{{ group.correct_answer }}</strong>.
+    </p>
 
     <p>
     Please fill out the communication form on the next page with your advice to the estimator. You will be paid as 

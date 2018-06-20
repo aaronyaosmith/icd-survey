@@ -8,8 +8,12 @@
     </p>
 
     <td valign="middle" align="center">
-        <img src="{% static "study/grid.png" %}" width="100%"/>
+        <img src="{% static "" %}{{ group.grid_path }}" width="100%" vspace="20"/>
     </td>
+
+    <p>
+    The correct number of solid dots is <strong>{{ group.correct_answer }}</strong>.
+    </p>
 
     {% next_button %}
 

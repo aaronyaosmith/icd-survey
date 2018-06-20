@@ -1,4 +1,5 @@
-import random
+import os, random, re
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
     Currency as c, currency_range
@@ -44,6 +45,7 @@ class Subsession(BaseSubsession):
         self.group_randomly()
         for group in self.get_groups():
             group.disclosure = random.choice([True, False])
+            group.choose_grid()
 
 class Group(BaseGroup):
     disclosure = models.BooleanField()
@@ -60,7 +62,6 @@ class Group(BaseGroup):
         ], 
         widget=widgets.RadioSelect
     )
-    correct_answer = models.IntegerField(initial=409)
     recommendation = models.IntegerField(
         min=0,
         max=900,
@@ -69,6 +70,11 @@ class Group(BaseGroup):
         min=0,
         max=900,
     )
+
+    grid_number = models.IntegerField()
+    correct_answer = models.IntegerField()
+    grid_path = models.StringField()
+    small_grid_path = models.StringField()
 
     # Likert scale questions
     a1 = make_Likert_agreement("I blame myself for my guess.")
@@ -111,11 +117,29 @@ class Group(BaseGroup):
             estimator.grid_reward = Constants.estimator_bonus
         else:
             estimator.grid_reward = c(0)
+
+
+    # Chooses a grid. Will choose a random grid-3x3_grid pair based on what is in the directory. Files must be named
+    # in this format: gridX_N.svg and small_gridX.svg, where X is a unique number per grid-3x3_grid pair, and N is 
+    # the number of filled in dots in the entire grid.
+    # Will assign values to group variables: grid_number, correct_answer, grid_path, small_grid_path.
+    def choose_grid(self):
+        static_dir = './study' + static('study')
+        static_files = os.listdir(static_dir)
+        grid_choices = list(filter(lambda x: re.match("grid[0-9]*_[0-9]*\.svg", x), static_files))
+
+        self.grid_path = 'study/' + random.choice(grid_choices)
+        self.grid_number = int(re.search("grid([0-9]*)_[0-9]*\.svg", self.grid_path).group(1))
+        self.correct_answer = int(re.search("grid[0-9]*_([0-9]*)\.svg", self.grid_path).group(1))
+        self.small_grid_path = 'study/small_grid' + str(self.grid_number) + '.svg'
+
+
                        
         
 
 class Player(BasePlayer):
     grid_reward = models.CurrencyField(initial=c(0))
+    entered_email = models.BooleanField()
     email = models.StringField(
         label="Please provide your email address. We will send your payment as an Amazon.com gift card to this "+
             "email address within five business days."

@@ -9,13 +9,10 @@
 
     {% if player.role == 'advisor' %}
         <p>Thank you for participating in this study. You will play the role of <strong>advisor</strong>. You have been paired with an "estimator."</p>
-	<p>In this study, you will make decisions that may earn you monetary bonuses.</p>
     {% elif player.role == 'estimator' %}
         <p>Thank you for participating in this study. You will play the role of <strong>estimator</strong>. You have been paired with an "advisor."</p>
-	<p>In this study, you will make decisions that may earn you monetary bonuses.</p>
     {% elif player.role == 'judge' %}
         <p>Thank you for participating in this study. You will play the role of <strong>judge</strong>. You have been paired with an "advisor" and an "estimator."</p>
-	<p>In this study, you will make decisions that may earn you monetary bonuses.</p>
     {% endif %}
 
     {% next_button %}

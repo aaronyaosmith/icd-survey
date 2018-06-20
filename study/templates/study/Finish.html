@@ -10,6 +10,14 @@
 
     {% formfield player.email %}
 
-    {% next_button %}
+    <div>
+	<button name="entered_email" value="False" class="btn btn-primary btn-large">Skip</button>
+	<button name="entered_email" value="True" class="btn btn-primary btn-large">Submit</button>
+    </div>
+
+    <p>
+    Please be aware that your reward will be sent to you via email.
+    </p>
+
 
 {% endblock %}

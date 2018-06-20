@@ -9,16 +9,18 @@
 {% block content %}
 
     {% if player.role == 'advisor' %}
-        <p>In this study, your estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator can only see a small subset of the grid. highlighted in yellow below</p>
+        <p>In this study, your estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator can only see a small subset of the grid highlighted in yellow below</p>
     {% elif player.role == 'estimator' %}
     	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. You can only see a small 3x3 subset of the grid, highlighted in yellow below.</p>
 	
     {% elif player.role == 'judge' %}
-	<p>In this study, the advisor was tasked with giving advice on the number of solid (filled) dots in a 30x30 grid. The number of solid dots could vary from 0 to 900. The estimator had access only to a small subset of the grid, 3x3 dots, whereas the advisors had access to the full grid. Est EXAMPLE below. Remember, you are playing the role of a neutral judge in this interaction. Later, we will ask for your thoughts on the interaction between the advisor and estimator.</p>
+    <p>In this study, the advisor was tasked with giving advice on the number of solid (filled) dots in a 30x30 grid. The advisor had access to the full grid, whereas the advisee had access only to a small subset of the grid, 3x3 dots, highlighted in yellow below.</p>
+    <p>Remember, you are playing the role of a neutral judge in this interaction. Later, we will ask for your thoughts on the interaction between the advisor and estimator.</p>
+
     {% endif %}
 
     <td valign="middle" align="center">
-        <img src="{% static "study/example.png" %}" width="100%"/>
+        <img src="{% static "study/example.png" %}" width="100%" vspace="20"/>
     </td>
 
     {% next_button %}
