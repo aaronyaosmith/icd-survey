@@ -242,7 +242,7 @@ class Finish(Page):
     form_model = 'player'
     form_fields = ['email','entered_email']
 
-    def email_error_message(self, values):
+    def error_message(self, values):
         email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
         if not email_pattern.match(values['email']) and values['entered_email']:
             return "Invalid email address"
