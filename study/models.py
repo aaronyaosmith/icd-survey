@@ -134,9 +134,6 @@ class Group(BaseGroup):
         self.small_grid_path = 'study/small_grid' + str(self.grid_number) + '.svg'
 
 
-                       
-        
-
 class Player(BasePlayer):
     grid_reward = models.CurrencyField(initial=c(0))
     entered_email = models.BooleanField()

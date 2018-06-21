@@ -17,6 +17,10 @@
     </strong></p>
     {% endif %}
 
+    <p>
+    The dots-estimation task had the following compensation scheme:
+    </p>
+
     <table style="width:100%">
 	    <tr>
 		    <td>If the estimator guessed...</td>
@@ -50,25 +54,8 @@
 	    </tr>
     </table>
 
-
-
-
-
-
-
-
-
     <p>
-    The advisor had the following compensation scheme:   
-    </p>
-    <p>
-    If the estimator's estimate exceeded the number of solid dots in the grid (i.e., if the estimator's estimate was 410 or above), <strong>the advisor earned {{ Constants.advisor_bonus }}</strong>.
-    </p>
-    <p>
-    If the estimator's estimate exceeded the number of solid dots in the grid by 100 or more (i.e., if the estimator's estimate was 509 or above), <strong>the advisor earned {{ Constants.advisor_big_bonus }}</strong>.
-    </p>
-    <p>
-    <strong>The estimator earned {{ Constants.estimator_bonus }}</strong> if their estimate was within 10 dots of the correct answer (in this case, between 399 and 419).
+    As you can see, the advisor could earn a bonus if the estimator overestimated the number of solid dots. The advisor could earn an even bigger bonus if the estimator overestimated by 100 or more.
     </p>
 
     {% next_button %}

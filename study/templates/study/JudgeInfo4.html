@@ -5,16 +5,22 @@
 {% block content %}
 
     <p>
-    Thus, the advisor could earn extra money if the estimator overestimated the number of solid dots.
+    During the dots-estimation task, the advisor sent the estimator a message recommending that the number of solid dots in the 30x30 grid was <strong>{{ group.recommendation }}</strong>. Recall that the correct number was <strong>{{ group.correct_answer }}</strong>.
     </p>
 
     {% if group.disclosure == True %}
     <p>
-    As you may recall, the advisor notified the estimator about this conflict of interest before the estimator provided an estimate.
+    The advisor’s message included a disclosure notice about his/her compensation scheme, which the estimator was able to view before making the ultimate estimate.
     </p>
+    <p>
+    This disclosure let the estimator know that the advisor was not compensated based on the accuracy of the estimator's estimate, but was paid if the estimator overestimated the true number of solid dots.
+    </p>
+
+
+
     {% else %}
     <p>
-    As you may recall, the advisor did not notify the estimator about this conflict of interest before the estimator provided an estimate.
+    The advisor's message did not mention the advisor's compensation scheme.
     </p>
     {% endif %}
 

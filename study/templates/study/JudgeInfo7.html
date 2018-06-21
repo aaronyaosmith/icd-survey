@@ -4,21 +4,56 @@
 
 {% block content %}
 
+    
     <p>
-    Recall that the advisor told the estimator there were {{ group.recommendation }} solid dots and the estimator was {% if group.disclosure == False %}not{% endif %} informed that the advisor stood to benefit financially if she overestimated. Recall also that the estimator estimated there were {{ group.estimate }}.  As you know, the advisor earned {{ Constants.advisor_bonus }} if this estimate was above {{ group.correct_answer }}, and {{ Constants.advisor_big_bonus }} if the estimate was above {{ advisor_upper_bound }}. The estimator earned {{ Constants.estimator_bonus }} if the estimate was between {{ estimator_lower_bound }} and {{ estimator_upper_bound }}.
-    </p> 
-    <p>
-    Below, we will ask you to make a judgment about whether the bonus should be split between the advisor and estimator equally ({{ Constants.appeal_reward_split }} apiece) or whether the estimator should get the whole {{ Constants.appeal_reward }} while the advisor gets nothing. 
+    Recall that the dots-estimation task had the following compensation scheme:
     </p>
-    <p><strong>
-    If you believe that the estimator was treated unfairly, you should reward the entire bonus to the estimator. 
-    </strong></p>
-    <p><strong>
-    If you believe that the estimator was treated fairly, you should split the bonus evenly.
-    </strong></p>
+
+    <table style="width:100%">
+	    <tr>
+		    <td>If the estimator guessed...</td>
+		    <td>...the estimator was paid...</td>
+		    <td>...and the advisor was paid...</td>
+	    </tr>
+	    <tr>
+		    <th>Less than {{ row2_lower }}</th>
+		    <td>Nothing</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row2_lower }}-{{ row2_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row3_lower }}-{{ row3_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row4_lower }}-{{ row4_upper }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>Greater than {{ row4_lower }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_big_bonus }}</td>
+	    </tr>
+    </table>
+
+
+
     <p>
-    Assuming the estimator chooses to pursue this appeal, the judgment you make will determine the actual payouts given to the estimator and the advisor. 
+    Recall that the advisor told the estimator there were <strong>{{ group.recommendation }}</strong> solid dots and the estimator was {% if group.disclosure == False %}<strong>not</strong>{% endif %} informed that the advisor stood to benefit financially if she overestimated. 
     </p>
+    <p>
+    Recall also that the estimator estimated there were <strong>{{ group.estimate }}</strong>. As a result, the advisor earned a bonus of {{ advisor_reward }} and the estimator earned a bonus of {{ estimator_reward }}.
+    </p>
+    <p>
+    On the next page, you will be asked to make a judgement about whether the estimator was treated fairly.
+    </p>
+
 
 
     {% next_button %}

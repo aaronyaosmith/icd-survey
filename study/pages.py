@@ -156,7 +156,9 @@ class JudgeInfo3(Page):
             'row3_lower': self.group.correct_answer + 1,
             'row3_upper': self.group.correct_answer + 10,
             'row4_lower': self.group.correct_answer + 11,
-            'row4_upper': self.group.correct_answer + 99
+            'row4_upper': self.group.correct_answer + 99,
+            'advisor_reward': self.group.get_player_by_role('advisor').grid_reward,
+            'estimator_reward': self.group.get_player_by_role('estimator').grid_reward
         }
 
 class JudgeInfo4(Page):
@@ -182,9 +184,12 @@ class JudgeInfo7(Page):
         return self.player.is_judge()
     def vars_for_template(self):
         return {
-            'advisor_upper_bound': self.group.correct_answer + 100,
-            'estimator_lower_bound': self.group.correct_answer - 10,
-            'estimator_upper_bound': self.group.correct_answer + 10,
+            'row2_lower': self.group.correct_answer - 10, 
+            'row2_upper': self.group.correct_answer,
+            'row3_lower': self.group.correct_answer + 1,
+            'row3_upper': self.group.correct_answer + 10,
+            'row4_lower': self.group.correct_answer + 11,
+            'row4_upper': self.group.correct_answer + 99
         }
 
 class Judgement(Page):
@@ -286,6 +291,7 @@ page_sequence = [
     EstAppeal3,
     EstAppeal4,
     JudgeInfo1,
+#    JudgeInfo2,
     JudgeInfo3,
     JudgeInfo4,
     JudgeInfo5,
