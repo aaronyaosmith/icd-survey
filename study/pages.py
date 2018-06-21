@@ -149,6 +149,15 @@ class JudgeInfo2(Page):
 class JudgeInfo3(Page):
     def is_displayed(self):
         return self.player.is_judge()
+    def vars_for_template(self):
+        return {
+            'row2_lower': self.group.correct_answer - 10, 
+            'row2_upper': self.group.correct_answer,
+            'row3_lower': self.group.correct_answer + 1,
+            'row3_upper': self.group.correct_answer + 10,
+            'row4_lower': self.group.correct_answer + 11,
+            'row4_upper': self.group.correct_answer + 99
+        }
 
 class JudgeInfo4(Page):
     def is_displayed(self):
@@ -277,7 +286,6 @@ page_sequence = [
     EstAppeal3,
     EstAppeal4,
     JudgeInfo1,
-    JudgeInfo2,
     JudgeInfo3,
     JudgeInfo4,
     JudgeInfo5,

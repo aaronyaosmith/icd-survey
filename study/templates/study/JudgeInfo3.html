@@ -4,15 +4,59 @@
 
 {% block content %}
 
+    <p><strong>
+    The estimator was paid a bonus if he/she guessed within 10 dots of the correct number.
+    </p></strong>
     {% if group.disclosure == True %}
     <p><strong>
-    As seen in the form, the advisor was not compensated based on the accuracy of the estimator's estimate, but was paid if the estimator overestimated the true number of solid dots.
+    As the advisor informed the estimator, the advisor was paid a bonus if the estimator overestimated.
     </strong></p>
     {% else %}
     <p><strong>
-    The advisor was not compensated based on the accuracy of the estimator's estimate, but was paid if the estimator overestimated the true number of solid dots.
+    Unbeknownst to the estimator, the advisor was paid a bonus if the estimator overestimated.
     </strong></p>
     {% endif %}
+
+    <table style="width:100%">
+	    <tr>
+		    <td>If the estimator guessed...</td>
+		    <td>...the estimator was paid...</td>
+		    <td>...and the advisor was paid...</td>
+	    </tr>
+	    <tr>
+		    <th>Less than {{ row2_lower }}</th>
+		    <td>Nothing</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row2_lower }}-{{ row2_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row3_lower }}-{{ row3_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row4_lower }}-{{ row4_upper }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>Greater than {{ row4_lower }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_big_bonus }}</td>
+	    </tr>
+    </table>
+
+
+
+
+
+
+
+
 
     <p>
     The advisor had the following compensation scheme:   
