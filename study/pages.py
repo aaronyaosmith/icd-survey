@@ -109,11 +109,11 @@ class GridReward(Page):
     def is_displayed(self):
         return self.player.is_advisor() or self.player.is_estimator()
 
-class AdvInfo1(Page):
+class EstInfo1(Page):
     def is_displayed(self):
         return self.player.is_estimator()
 
-class AdvInfo2(Page):
+class EstInfo2(Page):
     def is_displayed(self):
         return self.player.is_estimator()
     def vars_for_template(self):
@@ -189,17 +189,19 @@ class JudgeInfo7(Page):
             'row3_lower': self.group.correct_answer + 1,
             'row3_upper': self.group.correct_answer + 10,
             'row4_lower': self.group.correct_answer + 11,
-            'row4_upper': self.group.correct_answer + 99
+            'row4_upper': self.group.correct_answer + 99,
+            'advisor_reward': self.group.get_player_by_role('advisor').grid_reward,
+            'estimator_reward': self.group.get_player_by_role('estimator').grid_reward
         }
 
-class Judgement(Page):
+class Judgment(Page):
     form_model = 'group'
     form_fields = ['appeal_granted']
 
     def is_displayed(self):
         return self.player.is_judge()
 
-class WaitForJudgement(WaitPage):
+class WaitForJudgment(WaitPage):
     pass
 
 class Blame(Page):
@@ -284,8 +286,8 @@ page_sequence = [
     WaitForEstimate,
     RevealGrid,
     GridReward,
-    AdvInfo1,
-    AdvInfo2,
+    EstInfo1,
+    EstInfo2,
     EstAppeal1,
     EstAppeal2,
     EstAppeal3,
@@ -297,8 +299,8 @@ page_sequence = [
     JudgeInfo5,
     JudgeInfo6,
     JudgeInfo7,
-    Judgement,
-    WaitForJudgement,
+    Judgment,
+    WaitForJudgment,
     Blame,
     ManipulationChecks,
     Conclusion,
