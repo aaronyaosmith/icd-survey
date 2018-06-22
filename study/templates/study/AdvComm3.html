@@ -17,11 +17,6 @@
     <p>
     <strong>If the estimator's estimate is off by more than 10</strong>, he or she will receive no bonus.
     </p>
-    <p>
-    For example, if the correct number of solid dots is 450, the estimator will earn a {{ Constants.estimator_bonus }} if he or she 
-    estimates a number between 440-460. If the estimator estimates 439 or lower, or 461 or higher, he or she 
-    will receive no bonus.
-    </p>
     <h3>
     Your payment
     </h3>
@@ -34,14 +29,41 @@
     the correct value</strong>.
     </p>
     <p>
-    For example, if the correct number of solid dots is 450, and the estimator estimates 451 dots, then you 
-    will receive a {{ Constants.advisor_bonus }} bonus. If the estimator estimates that the number of solid dots was 550 or more, then 
-    you would receive a {{ Constants.advisor_big_bonus }} bonus.
+    For example, suppose the correct number of solid dots were <strong>450</strong>. The compensation scheme would be as follows:
     </p>
-    <p>
-    Note that if the estimator does not estimate above the correct number, you will receive nothing. For 
-    instance, if the estimator estimates 450 or lower, you will receive nothing.
-    </p>
+
+    <table style="width:100%" margin="20px">
+	    <tr>
+		    <td>If the estimator guesses...</td>
+		    <td>the estimator will be paid a bonus of...</td>
+		    <td>you, the advisor, will be paid a bonus of...</td>
+	    </tr>
+	    <tr>
+		    <th>Less than 440</th>
+		    <td>Nothing</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>440-450</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>451-460</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>461-549</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>Greater than 549</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_big_bonus }}</td>
+	    </tr>
+    </table><br/>
 
     {% next_button %}
 

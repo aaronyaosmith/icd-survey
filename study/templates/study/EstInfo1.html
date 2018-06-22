@@ -16,6 +16,10 @@
         <img src="{% static "" %}{{ group.grid_path }}" width="100%" vspace="20"/>
     </td>
 
+    <p>
+    The correct number of solid dots is <strong>{{ group.correct_answer }}</strong>.
+    </p>
+
     {% if group.disclosure == True %}
 	<p>
 	<strong>As specified earlier, your advisor was NOT compensated if you were accurate</strong>, but if you 
@@ -29,19 +33,42 @@
 	scheme:
     {% endif %}
 
-	<p>
-	If your estimate exceeded the number of solid dots in the grid, <strong>the advisor earned a 
-	{{ Constants.advisor_bonus }} bonus</strong>.
-	</p> 
-	<p>
-	If your estimate exceeded the number of solid dots in the grid by <em>100 or more</em>, <strong>the 
-	advisor earned a {{ Constants.advisor_big_bonus }} bonus</strong>.
-	</p>
-	<p>
-	<strong><em>
-	Thus, your advisor could earn extra money if you overestimated the number of solid dots.
-	</strong></em>
-	</p>
+    <table style="width:100%" margin="20px">
+	    <tr>
+		    <td>If you guessed...</td>
+		    <td>you were paid a bonus of...</td>
+		    <td>the advisor was paid a bonus of...</td>
+	    </tr>
+	    <tr>
+		    <th>Less than {{ row2_lower }}</th>
+		    <td>Nothing</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row2_lower }}-{{ row2_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row3_lower }}-{{ row3_upper }}</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>{{ row4_lower }}-{{ row4_upper }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>Greater than {{ row4_lower }}</th>
+		    <td>Nothing</td>
+		    <td>{{ Constants.advisor_big_bonus }}</td>
+	    </tr>
+    </table><br/>
+
+    <p><strong><em>
+        Thus, your advisor could earn extra money if you overestimated the number of solid dots.
+    </em></strong></p>
 
     {% next_button %}
 

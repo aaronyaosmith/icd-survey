@@ -4,10 +4,12 @@
 
 {% block content %}
    
-    <p>
+    <p><strong>
     {{ header }}
-    </p>
+    </strong></p>
 
+    {% comment %}
+    <!--
     <table class="table">
         {% for field in form %}
             <tr>
@@ -17,7 +19,13 @@
                 {% endfor %}
             </tr>
         {% endfor %}
-    </table>
+    </table><br/>
+    -->
+    {% endcomment %}
+
+    {% for field in form %}
+    {% formfield field %}
+    {% endfor %}
 
     {% next_button %}
 

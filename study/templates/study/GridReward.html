@@ -5,7 +5,7 @@
 
     {% if player.role == 'advisor' %}
         <p>
-	Your estimator guessed that there were {{ group.estimate }} solid dots. The correct number was 
+	The estimator guessed that there were <strong>{{ group.estimate }}</strong> solid dots. The correct number was 
 	{{ group.correct_answer }}. Therefore, you earn {{ player.grid_reward }}{% if player.grid_reward != 0 %}!{% else %}.{% endif %}
 	</p>
     {% elif player.role == 'estimator' %}

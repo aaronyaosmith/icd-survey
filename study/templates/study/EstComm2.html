@@ -4,7 +4,7 @@
 {% block content %}
 
     <p>
-    You will be rewarded for the accuracy of your estimate.
+    In the dots-estimation task, you will be rewarded for the accuracy of your estimate.
     </p>
     <p>
     <strong>If you estimate is within 10 dots of the correct number</strong>, you will receive a {{ Constants.estimator_bonus }} bonus.
@@ -13,9 +13,28 @@
     <strong>If your estimate is off by more than 10</strong>, you will receive no bonus.
     </p>
     <p>
-    For example, if the correct number of solid dots is 450, you will earn a {{ Constants.estimator_bonus }} bonus if you estimate a number 
-    between 440-460. If you estimate 439 or lower, or 461 or higher, you will receive nothing.
-    </p 
+    For example, suppose the correct number of solid dots were <strong>450</strong>. The compensation scheme would be as follows:
+    </p>
+
+    <table style="width:100%" margin="20px">
+	    <tr>
+		    <td>If you guessed...</td>
+		    <td>you would be paid a bonus of...</td>
+	    </tr>
+	    <tr>
+		    <th>Less than 440</th>
+		    <td>Nothing</td>
+	    </tr>
+	    <tr>
+		    <th>440-460</th>
+		    <td>{{ Constants.estimator_bonus }}</td>
+	    </tr>
+	    <tr>
+		    <th>Greater than 460</th>
+		    <td>Nothing</td>
+	    </tr>
+    </table><br/>
+
 
     {% next_button %}
 

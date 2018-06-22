@@ -75,6 +75,11 @@ class Group(BaseGroup):
     correct_answer = models.IntegerField()
     grid_path = models.StringField()
     small_grid_path = models.StringField()
+    
+    example_grid_number = models.IntegerField()
+    example_grid_path = models.StringField()
+    example_small_grid_path = models.StringField()
+
 
     # Likert scale questions
     a1 = make_Likert_agreement("I blame myself for my guess.")
@@ -128,10 +133,16 @@ class Group(BaseGroup):
         static_files = os.listdir(static_dir)
         grid_choices = list(filter(lambda x: re.match("grid[0-9]*_[0-9]*\.svg", x), static_files))
 
-        self.grid_path = 'study/' + random.choice(grid_choices)
+        random.shuffle(grid_choices)
+
+        self.grid_path = 'study/' + grid_choices.pop()
         self.grid_number = int(re.search("grid([0-9]*)_[0-9]*\.svg", self.grid_path).group(1))
         self.correct_answer = int(re.search("grid[0-9]*_([0-9]*)\.svg", self.grid_path).group(1))
         self.small_grid_path = 'study/small_grid' + str(self.grid_number) + '.svg'
+
+        self.example_grid_path = 'study/' + grid_choices.pop()
+        self.example_grid_number = int(re.search("grid([0-9]*)_[0-9]*\.svg", self.grid_path).group(1))
+        self.example_small_grid_path = 'study/small_grid' + str(self.example_grid_number) + '.svg'
 
 
 class Player(BasePlayer):
@@ -139,7 +150,9 @@ class Player(BasePlayer):
     entered_email = models.BooleanField()
     email = models.StringField(
         label="Please provide your email address. We will send your payment as an Amazon.com gift card to this "+
-            "email address within five business days."
+            "email address within five business days.",
+        blank=True,
+        initial=""
     )
 
     consent18 = models.BooleanField(
@@ -166,7 +179,7 @@ class Player(BasePlayer):
         blank=True
     )
     d2 = models.IntegerField(
-        label="How old are you, in years?",
+        label="What is your age?",
         min=18,
         max=130,
         blank=True

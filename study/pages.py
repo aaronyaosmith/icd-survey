@@ -112,6 +112,16 @@ class GridReward(Page):
 class EstInfo1(Page):
     def is_displayed(self):
         return self.player.is_estimator()
+    def vars_for_template(self):
+        return {
+            'row2_lower': self.group.correct_answer - 10, 
+            'row2_upper': self.group.correct_answer,
+            'row3_lower': self.group.correct_answer + 1,
+            'row3_upper': self.group.correct_answer + 10,
+            'row4_lower': self.group.correct_answer + 11,
+            'row4_upper': self.group.correct_answer + 99,
+        }
+
 
 class EstInfo2(Page):
     def is_displayed(self):
@@ -259,8 +269,11 @@ class Finish(Page):
     form_fields = ['email','entered_email']
 
     def error_message(self, values):
-        email_pattern = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)")
-        if not email_pattern.match(values['email']) and values['entered_email']:
+        email_pattern = re.compile(r"(^$|(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$))")
+        if (
+                (values['entered_email'] is True and values['email'] is None) or 
+                (values['entered_email'] is True and not email_pattern.match(values['email']))
+           ):
             return "Invalid email address"
 
 page_sequence = [
@@ -284,7 +297,7 @@ page_sequence = [
     EstComm5,
     EstComm6,
     WaitForEstimate,
-    RevealGrid,
+#    RevealGrid,
     GridReward,
     EstInfo1,
     EstInfo2,

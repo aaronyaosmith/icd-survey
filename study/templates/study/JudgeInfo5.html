@@ -14,13 +14,13 @@
     </p>
     {% else %}
     <p>
-    The estimator earned nothing because their estimate was more than ten away from {{ group.correct_answer }}.
+    The estimator earned no bonus because their estimate was more than ten away from {{ group.correct_answer }}.
     </p>
     {% endif %}
 
     {% if group.estimate <= group.correct_answer %}
     <p>
-    As a result, the advisor earned nothing because the estimator's estimate was {{ group.correct_answer }} or below.
+    As a result, the advisor earned no bonus because the estimator's estimate was {{ group.correct_answer }} or below.
     </p>
     {% elif group.estimate >= advisor_upper_bound %}
     <p>

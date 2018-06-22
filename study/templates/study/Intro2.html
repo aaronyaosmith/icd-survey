@@ -9,7 +9,7 @@
 {% block content %}
 
     {% if player.role == 'advisor' %}
-        <p>In this study, your estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator can only see a small subset of the grid highlighted in yellow below.</p>
+        <p>In this study, the estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator can only see a small subset of the grid highlighted in yellow below.</p>
     {% elif player.role == 'estimator' %}
     	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. You can only see a small 3x3 subset of the grid, highlighted in yellow below.</p>
 	
@@ -19,9 +19,32 @@
 
     {% endif %}
 
+    <p>
+    Below is an EXAMPLE of the 30x30 grid that 
+    {% if player.role == 'advisor' %}
+    you, the advisor, will see.
+    {% else %}
+    the advisor will see.
+    {% endif %}
+    </p>
+
     <td valign="middle" align="center">
-        <img src="{% static "study/example.png" %}" width="100%" vspace="20"/>
+        <img src="{% static "" %}{{ group.example_grid_path }}" width="100%" vspace="20"/>
     </td>
+
+    <p>
+    Below is an EXAMPLE of the 3x3 grid that 
+    {% if player.role == 'estimator' %}
+    you, the estimator, will see.
+    {% else %}
+    the estimator will see.
+    {% endif %}
+    </p>
+
+    <td valign="middle" align="center">
+        <img src="{% static "" %}{{ group.example_small_grid_path }}" vspace="20"/>
+    </td>
+
 
     {% next_button %}
 
