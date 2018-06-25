@@ -13,7 +13,7 @@ class Consent(Page):
     def error_message(self, values):
         print('values is', values)
         if values["consent18"] != True or values["consentRead"] != True or values["consentWant"] != True:
-            return 'Advry, but you are not eligible for this study.'
+            return 'Sorry, but you are not eligible for this study.'
 
 # "You will play the role of %role%."
 class Intro1(Page):
@@ -61,8 +61,16 @@ class AdvComm7(Page):
         return self.player.is_advisor()
 
 class WaitForRecommendation(WaitPage):
+    template_name = 'study/WaitProgress.html'
+
     def is_displayed(self):
         return self.player.is_advisor() or self.player.is_estimator()
+    def vars_for_template(self):
+        return {
+                   'advisor': self.group.get_player_by_role('advisor').participant,
+                   'estimator': self.group.get_player_by_role('estimator').participant,
+                   'judge': self.group.get_player_by_role('judge').participant
+               }
 
 class EstComm1(Page):
     def is_displayed(self):
@@ -214,18 +222,21 @@ class Judgment(Page):
 class WaitForJudgment(WaitPage):
     pass
 
+class AdvPostJudgment(Page):
+    def is_displayed(self):
+        return self.player.is_advisor()
+
 class Blame(Page):
     template_name = "study/PostQuestions.html"
 
     form_model = 'group'
     def get_form_fields(self):
         if self.player.is_estimator():
-            return ['a1','a2','a3','a4','a5','a6','a7','a8','a9']
-        elif self.player.is_judge():
             return ['e1','e2','e3','e4','e5','e6','e7','e8','e9']
-
-    def is_displayed(self):
-        return self.player.is_estimator() or self.player.is_judge()
+        elif self.player.is_judge():
+            return ['j1','j2','j3','j4','j5','j6','j7','j8','j9']
+        elif self.player.is_advisor():
+            return ['a1','a2','a3','a4','a5','a6','a7','a8','a9']
 
     def vars_for_template(self):
         return {'header': "Now we'd like to ask you to rate your level of agreement with a series of statements."}
@@ -314,6 +325,7 @@ page_sequence = [
     JudgeInfo7,
     Judgment,
     WaitForJudgment,
+    AdvPostJudgment,
     Blame,
     ManipulationChecks,
     Conclusion,

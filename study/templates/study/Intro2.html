@@ -9,9 +9,9 @@
 {% block content %}
 
     {% if player.role == 'advisor' %}
-        <p>In this study, the estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator can only see a small subset of the grid highlighted in yellow below.</p>
+        <p>In this study, the estimator will attempt to estimate the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. The estimator will only be able to see a small 3x3 subset of the grid highlighted in yellow below.</p>
     {% elif player.role == 'estimator' %}
-    	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. You can only see a small 3x3 subset of the grid, highlighted in yellow below.</p>
+    	<p>In this study, your advisor will give you advice on the number of solid (filled) dots in a 30x30 grid, like the one that you can see below. You will only be able to see a small 3x3 subset of the grid, highlighted in yellow below.</p>
 	
     {% elif player.role == 'judge' %}
     <p>In this study, the advisor was tasked with giving advice on the number of solid (filled) dots in a 30x30 grid. The advisor had access to the full grid, whereas the estimator had access only to a small subset of the grid, 3x3 dots, highlighted in yellow below.</p>

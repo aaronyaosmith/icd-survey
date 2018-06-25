@@ -1,0 +1,11 @@
+{% extends 'otree/WaitPage.html' %}
+{% load static otree %}
+{% block title %}{{ title_text }}{% endblock %}
+{% block content %}
+    {{ body_text }}
+    <p>
+        {{ advisor.current_page_ }}
+	{{ judge.current_page_ }}
+        {{ estimator.current_page_ }}
+    </p>
+{% endblock %}

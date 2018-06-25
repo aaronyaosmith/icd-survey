@@ -4,17 +4,47 @@
 
 {% block content %}
 
+    <div align="center" style="border: thin solid black">
+    
+    <h3>
+    Communication Form
+    </h3>
+    <td valign="middle" align="center">
+        <img src="{% static "" %}{{ group.small_grid_path }}" vspace="20"/>
+    </td>
+
+    {% if group.disclosure == True %}
+        <p>
+	I should let you know that I am rewarded with a {{ Constants.advisor_bonus }} bonus if your estimate is above the correct number of 
+	solid dots. I will receive a {{ Constants.advisor_big_bonus }} bonus if your estimate is 100 or more dots above the correct 
+	number.
+	</p>
+	<p>
+	So, it is in my interest that you estimate a high number of dots.
+	<p>
+    {% endif %}
+	
+    <p><strong>
+    I, your advisor, recommend that the number of solid dots on the 30x30 grid is:
+    </strong></p>
+
+    <h3><strong>{{ group.recommendation }}</strong></h3>
+
+    </div>
+
+    <br/>
+    
     <p>
     Based on the advisor's recommendation, the estimator provided an estimate of <strong>{{ group.estimate }}</strong>.
     </p>
 
     {% if group.estimate <= estimator_upper_bound and group.estimate >= estimator_lower_bound %}
     <p>
-    The estimator earned {{ Constants.estimator_bonus }} because their estimate was ten or less away from {{ group.correct_answer }}.
+    As a result, the estimator earned {{ Constants.estimator_bonus }} because their estimate was ten or less away from {{ group.correct_answer }}.
     </p>
     {% else %}
     <p>
-    The estimator earned no bonus because their estimate was more than ten away from {{ group.correct_answer }}.
+    As a result, the estimator earned no bonus because their estimate was more than ten away from {{ group.correct_answer }}.
     </p>
     {% endif %}
 

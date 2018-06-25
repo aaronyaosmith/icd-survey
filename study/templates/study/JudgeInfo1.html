@@ -11,9 +11,14 @@
     The picture the advisor saw is below:
     </p>
 
+    <div style="border: thin solid black">
     <td valign="middle" align="center">
         <img src="{% static "" %}{{ group.grid_path }}" width="100%" vspace="20"/>
     </td>
+    <p>
+    The correct number of solid dots is <strong>{{ group.correct_answer }}</strong> 
+    </p>
+    </div>
 
 
     {% next_button %}

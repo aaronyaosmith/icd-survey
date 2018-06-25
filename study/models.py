@@ -48,18 +48,27 @@ class Subsession(BaseSubsession):
             group.choose_grid()
 
 class Group(BaseGroup):
+
+    def shuffle_choices(choices):
+        random.shuffle(choices)
+        return choices
+
     disclosure = models.BooleanField()
     appealed = models.BooleanField(
         label="Would you like to send the case to the judge?",
+        choices=shuffle_choices([
+            [True, "Yes"],
+            [False, "No"]
+        ]),
         widget=widgets.RadioSelect
     ) # did estimator appeal?
     appeal_granted = models.BooleanField(
         label="As judge, I determine that the "+str(Constants.appeal_reward)+" bonus shall be awarded as follows:", 
-        choices=[
+        choices=shuffle_choices([
             [False, "The estimator and advisor shall both receive "+str(Constants.appeal_reward_split)+"."],
             [True, "The estimator shall receive "+str(Constants.appeal_reward)+
                 " and the advisor shall receive nothing."],
-        ], 
+        ]), 
         widget=widgets.RadioSelect
     )
     recommendation = models.IntegerField(
@@ -82,27 +91,37 @@ class Group(BaseGroup):
 
 
     # Likert scale questions
-    a1 = make_Likert_agreement("I blame myself for my guess.")
-    a2 = make_Likert_agreement("I blame my advisor for my guess.")
-    a3 = make_Likert_agreement("I have a legitimate grievance against my advisor.")
-    a4 = make_Likert_agreement("I have a strong case if I chose to pursue an appeal.")
-    a5 = make_Likert_agreement("I believe that others would rule in my favor on an appeal.")
-    a6 = make_Likert_agreement("My advisor treated me fairly.")
-    a7 = make_Likert_agreement("I was mistreated by my advisor.")
-    a8 = make_Likert_agreement("I deserve to receive the full bonus of "+str(Constants.appeal_reward)+".")
-    a9 = make_Likert_agreement("My advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
+    e1 = make_Likert_agreement("I blame myself for my guess.")
+    e2 = make_Likert_agreement("I blame my advisor for my guess.")
+    e3 = make_Likert_agreement("I have a legitimate grievance against my advisor.")
+    e4 = make_Likert_agreement("I have a strong case if I chose to pursue an appeal.")
+    e5 = make_Likert_agreement("I believe that others would rule in my favor on an appeal.")
+    e6 = make_Likert_agreement("My advisor treated me fairly.")
+    e7 = make_Likert_agreement("I was mistreated by my advisor.")
+    e8 = make_Likert_agreement("I deserve to receive the full bonus of "+str(Constants.appeal_reward)+".")
+    e9 = make_Likert_agreement("My advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
-    e1 = make_Likert_agreement("I blame the estimator for his/her estimate.")
-    e2 = make_Likert_agreement("I blame the advisor for the estimator's estimate.")
-    e3 = make_Likert_agreement("The estimator has a legitimate grievance against the advisor.")
-    e4 = make_Likert_agreement("The estimator has a strong case if he/she chooses to pursue an appeal.")
-    e5 = make_Likert_agreement("I believe that others would rule in the estimator's favor on an appeal.")
-    e6 = make_Likert_agreement("The advisor treated the estimator fairly.")
-    e7 = make_Likert_agreement("The estimator was mistreated by the advisor.")
-    e8 = make_Likert_agreement("The estimator deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
-    e9 = make_Likert_agreement("The advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
+    j1 = make_Likert_agreement("I blame the estimator for his/her estimate.")
+    j2 = make_Likert_agreement("I blame the advisor for the estimator's estimate.")
+    j3 = make_Likert_agreement("The estimator has a legitimate grievance against the advisor.")
+    j4 = make_Likert_agreement("The estimator has a strong case if he/she chooses to pursue an appeal.")
+    j5 = make_Likert_agreement("I believe that others would rule in the estimator's favor on an appeal.")
+    j6 = make_Likert_agreement("The advisor treated the estimator fairly.")
+    j7 = make_Likert_agreement("The estimator was mistreated by the advisor.")
+    j8 = make_Likert_agreement("The estimator deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
+    j9 = make_Likert_agreement("The advisor does not deserve to receive "+str(Constants.appeal_reward_split)+
             " of the bonus.")
- 
+    a1 = make_Likert_agreement("I blame the estimator for his/her estimate.")
+    a2 = make_Likert_agreement("I blame myself, the advisor, for the estimator's estimate.")
+    a3 = make_Likert_agreement("The estimator has a legitimate grievance against me, the advisor.")
+    a4 = make_Likert_agreement("The estimator has a strong case if he/she chooses to pursue an appeal.")
+    a5 = make_Likert_agreement("I believe that others would rule in the estimator's favor on an appeal.")
+    a6 = make_Likert_agreement("I, the advisor treated the estimator fairly.")
+    a7 = make_Likert_agreement("The estimator was mistreated by me, the advisor.")
+    a8 = make_Likert_agreement("The estimator deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
+    a9 = make_Likert_agreement("I, the advisor, do not deserve to receive "+str(Constants.appeal_reward_split)+
+            "of the bonus.")
+
     # Calculates rewards based on the advisor's recommendation and estimator's estimate, then stores them per player
     # in grid_reward.
     def calculate_grid_rewards(self):
@@ -143,6 +162,7 @@ class Group(BaseGroup):
         self.example_grid_path = 'study/' + grid_choices.pop()
         self.example_grid_number = int(re.search("grid([0-9]*)_[0-9]*\.svg", self.grid_path).group(1))
         self.example_small_grid_path = 'study/small_grid' + str(self.example_grid_number) + '.svg'
+
 
 
 class Player(BasePlayer):
@@ -232,17 +252,17 @@ class Player(BasePlayer):
   
     # Manipulation checks
     m1 = models.BooleanField(
-        label="In this task, the advisor would get a bonus if the estimator overestimated the true number of "
+        label="In the dots-estimation task, the advisor would get a bonus if the estimator overestimated the true number of "
             + "solid dots.",
         widget=widgets.RadioSelect
     )
     m2 = models.BooleanField(
-        label="In this task, the estimator would get a bonus if they were within 10 dots of the true number of " 
+        label="In the dots-estimation task, the estimator would get a bonus if they were within 10 dots of the true number of " 
             + "solid dots.",
         widget=widgets.RadioSelect
     )
     m3 = models.BooleanField(
-        label="The estimator was informed that the advisor would make more money if the estimator overestimated "
+        label="In the dots-estimation task, the estimator was informed that the advisor would make more money if the estimator overestimated "
             + "the true number of solid dots.",
         widget=widgets.RadioSelect
     )

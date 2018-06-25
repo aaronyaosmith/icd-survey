@@ -1,0 +1,29 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block content %}
+
+    <p>
+    Now we’d like to provide you with more information about what has been happening
+    while you’ve been waiting.
+    </p>
+
+    <p>
+    You and the estimator were both eligible to receive additional bonuses for participating.
+    There was {{ Constants.appeal_reward }} to be split evenly between you and the estimator, for {{ Constants.appeal_reward_split }} apiece.
+    The estimator had the option to pay {{ Constants.appeal_cost }} to send his/her case to a third-party judge,
+    another participant. If the estimator chose not to send the case to the judge, the bonus
+    would continue to be split evenly between you and the estimator, for {{ Constants.appeal_reward_split }} apiece.
+    </p>
+
+    <p>
+    If the estimator chose to pay {{ Constants.appeal_cost }} to send the case to the judge, the judge would
+    decide whether you treated the estimator fairly in the dots-estimation task. If the judge
+    decided that you treated the estimator unfairly, the estimator would be awarded the
+    entire {{ Constants.appeal_reward }} bonus (and you would receive no bonus). If the judge decided that you
+    treated the estimator fairly, the bonus would continue to be split evenly for {{ Constants.appeal_reward_split }} apiece.
+    </p>
+
+    {% next_button %}
+
+{% endblock %}

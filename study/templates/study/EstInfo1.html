@@ -12,6 +12,8 @@
     The picture the advisor saw is below:
     </p>
 
+    <div style="border: thin solid black">
+
     <td valign="middle" align="center">
         <img src="{% static "" %}{{ group.grid_path }}" width="100%" vspace="20"/>
     </td>
@@ -19,6 +21,8 @@
     <p>
     The correct number of solid dots is <strong>{{ group.correct_answer }}</strong>.
     </p>
+
+    </div>
 
     {% if group.disclosure == True %}
 	<p>
@@ -60,7 +64,7 @@
 		    <td>{{ Constants.advisor_bonus }}</td>
 	    </tr>
 	    <tr>
-		    <th>Greater than {{ row4_lower }}</th>
+		    <th>Greater than {{ row4_upper }}</th>
 		    <td>Nothing</td>
 		    <td>{{ Constants.advisor_big_bonus }}</td>
 	    </tr>
