@@ -39,7 +39,6 @@ ROOMS = [
     {
         'name': 'room',
         'display_name': 'Experimental Room',
-        'use_secure_urls': True
     },
 ]
 
