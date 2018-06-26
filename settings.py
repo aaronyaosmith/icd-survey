@@ -19,12 +19,6 @@ SESSION_CONFIGS = [
     #    'app_sequence': ['public_goods', 'payment_info'],
     #},
     {
-        'name': 'test_game',
-        'display_name': 'Test game',
-        'num_demo_participants': 3,
-        'app_sequence': ['test_game'],
-    },
-    {
         'name': 'study',
         'display_name': 'ICD',
         'num_demo_participants': 3,
@@ -43,8 +37,8 @@ USE_POINTS = False
 
 ROOMS = [
     {
-        'name': 'test_room',
-        'display_name': 'Test Room',
+        'name': 'room',
+        'display_name': 'Experimental Room',
     },
 ]
 
