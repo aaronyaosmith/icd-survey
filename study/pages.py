@@ -107,7 +107,16 @@ class EstComm6(Page):
         return self.player.is_estimator()
 
 class WaitForEstimate(WaitPage):
-    pass
+    template_name = 'study/WaitProgress.html'
+
+    def vars_for_template(self):
+        return {
+                   'advisor': self.group.get_player_by_role('advisor').participant,
+                   'estimator': self.group.get_player_by_role('estimator').participant,
+                   'judge': self.group.get_player_by_role('judge').participant
+               }
+
+
 
 class RevealGrid(Page):
     def is_displayed(self):
@@ -220,7 +229,15 @@ class Judgment(Page):
         return self.player.is_judge()
 
 class WaitForJudgment(WaitPage):
-    pass
+    template_name = 'study/WaitProgress.html'
+
+    def vars_for_template(self):
+        return {
+                   'advisor': self.group.get_player_by_role('advisor').participant,
+                   'estimator': self.group.get_player_by_role('estimator').participant,
+                   'judge': self.group.get_player_by_role('judge').participant
+               }
+
 
 class AdvPostJudgment(Page):
     def is_displayed(self):

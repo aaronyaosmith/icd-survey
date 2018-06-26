@@ -3,9 +3,58 @@
 {% block title %}{{ title_text }}{% endblock %}
 {% block content %}
     {{ body_text }}
+    {% if player.role == 'advisor' %}
     <p>
-        {{ advisor.current_page_ }}
-	{{ judge.current_page_ }}
-        {{ estimator.current_page_ }}
+    Your status: {{ advisor.current_page_ }}
     </p>
+    <p>
+    Other player's status: {{ estimator.current_page_ }}
+    </p>
+    {% elif player.role == 'estimator' %}
+    <p>
+    Your status: {{ estimator.current_page_ }}
+    </p>
+    <p>
+    Other players' status: {{ advisor.current_page_ }} and {{ judge.current_page_ }}
+    </p>
+    {% else %}
+    <p>
+    Your status: {{ judge.current_page_ }}
+    </p>
+    <p>
+    Other players' status: {{ advisor.current_page_ }} and {{ estimator.current_page_ }}
+    </p>
+    {% endif %}
+    <p>
+        Waiting for others to catch up...
+    </p>
+    {% comment %}
+    <div class="progress" id="group-progress">
+        <div class="progress-bar" id="group-progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    {% endcomment %}
+    {% endblock %}
+
+{% block scripts %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        /*
+        $(".progress").hide();
+	$(".progress-bar").hide();
+	$("#group-progress").show();
+	$("#group-progress-bar").show();
+
+        $("#group-progress-bar").css("style","width: 50%");
+	$("#group-progress-bar").css("aria-valuenow","50");
+	*/
+        $(document).ready(function(){ 
+	    setTimeout(function(){ 
+			          location.reload()
+			         },
+				   10000); 
+	});
+    </script>
+
 {% endblock %}
