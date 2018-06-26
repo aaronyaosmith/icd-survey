@@ -122,7 +122,7 @@ class Group(BaseGroup):
     a7 = make_Likert_agreement("The estimator was mistreated by me, the advisor.")
     a8 = make_Likert_agreement("The estimator deserves to receive the full bonus of "+str(Constants.appeal_reward)+".")
     a9 = make_Likert_agreement("I, the advisor, do not deserve to receive "+str(Constants.appeal_reward_split)+
-            "of the bonus.")
+            " of the bonus.")
 
     estimator_opposite_appeal_payoff = models.CurrencyField(initial=c(0))
 
