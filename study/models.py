@@ -148,7 +148,7 @@ class Group(BaseGroup):
     # the number of filled in dots in the entire grid.
     # Will assign values to group variables: grid_number, correct_answer, grid_path, small_grid_path.
     def choose_grid(self):
-        static_dir = './study' + static('study')
+        static_dir = './study/static/study'
         static_files = os.listdir(static_dir)
         grid_choices = list(filter(lambda x: re.match("grid[0-9]*_[0-9]*\.svg", x), static_files))
 
