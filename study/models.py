@@ -42,8 +42,10 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
     def creating_session(self):
         # randomize players in groups, then assign disclosure/non-disclosure randomly to groups
-        self.group_randomly()
         for group in self.get_groups():
+            players = group.get_players()
+            random.shuffle(players)
+            group.set_players(players)
             group.disclosure = random.choice([True, False])
             group.choose_grid()
 
