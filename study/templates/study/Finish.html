@@ -7,7 +7,27 @@
     <p>
     Thank you for your participating!
     </p>
+    {% comment %}
+    <p>
+    Your participant ID is:
+    </p>
+    <h3>
+	    {{ participant.label }}
+    </h3>
+    {% endcomment %}
+    <p>
+    Your final payment will be: 
+    
+    <h3>
+	    {{ participant.payoff }}
+    </h3>
 
+    </p>
+    <p>
+    Please show this page to your experimenter to claim your payment.
+    </p>
+
+    {% comment %}
     {% formfield player.email %}
 
     <div>
@@ -19,5 +39,6 @@
     Please be aware that your reward will be sent to you via email.
     </p>
 
+    {% endcomment %}
 
 {% endblock %}

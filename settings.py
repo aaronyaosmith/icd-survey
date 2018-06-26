@@ -71,3 +71,6 @@ SECRET_KEY = 'm9xh(2!!4zk*yolg)5ub+$s4okp$apzht63@@bpj#njhsrydy%'
 
 # if an app is included in SESSION_CONFIGS, you don't need to list it here
 INSTALLED_APPS = ['otree']
+
+# Sentry setup
+SENTRY_DSN = environ.get('SENTRY_DSN')

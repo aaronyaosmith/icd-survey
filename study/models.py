@@ -122,6 +122,8 @@ class Group(BaseGroup):
     a9 = make_Likert_agreement("I, the advisor, do not deserve to receive "+str(Constants.appeal_reward_split)+
             "of the bonus.")
 
+    estimator_opposite_appeal_payoff = models.CurrencyField(initial=c(0))
+
     # Calculates rewards based on the advisor's recommendation and estimator's estimate, then stores them per player
     # in grid_reward.
     def calculate_grid_rewards(self):
@@ -296,11 +298,20 @@ class Player(BasePlayer):
                 self.payoff += Constants.appeal_reward_split
 
         if self.is_estimator():
+            self.group.estimator_opposite_appeal_payoff = self.payoff
             if self.group.appealed:
                 self.payoff -= Constants.appeal_cost
+            else:
+                self.group.estimator_opposite_appeal_payoff -= Constants.appeal_cost
 
-            if self.group.appealed and self.group.appeal_granted:
-                self.payoff += Constants.appeal_reward
+            if self.group.appeal_granted:
+                if self.group.appealed:
+                    self.payoff += Constants.appeal_reward
+                    self.group.estimator_opposite_appeal_payoff += Constants.appeal_reward_split
+                else:
+                    self.payoff += Constants.appeal_reward_split
+                    self.group.estimator_opposite_appeal_payoff += Constants.appeal_reward
             else:
                 self.payoff += Constants.appeal_reward_split
+                self.group.estimator_opposite_appeal_payoff += Constants.appeal_reward_split
      
